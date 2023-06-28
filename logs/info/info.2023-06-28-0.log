@@ -1,0 +1,16 @@
+2023-06-28 00:08:20 INFO  background-preinit org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 6.2.5.Final
+2023-06-28 00:08:20 INFO  main cn.soboys.restapispringbootstarter.RestApiSpringBootStarterApplication Starting RestApiSpringBootStarterApplication using Java 1.8.0_362 on xiangyongdembp with PID 44522 (/Users/xiangyong/selfProject/project/rest-api-spring-boot-starter/target/classes started by xiangyong in /Users/xiangyong/selfProject/project/rest-api-spring-boot-starter)
+2023-06-28 00:08:20 INFO  main cn.soboys.restapispringbootstarter.RestApiSpringBootStarterApplication No active profile set, falling back to 1 default profile: "default"
+2023-06-28 00:08:23 INFO  main org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8000 (http)
+2023-06-28 00:08:23 INFO  main org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8000"]
+2023-06-28 00:08:23 INFO  main org.apache.catalina.core.StandardService Starting service [Tomcat]
+2023-06-28 00:08:23 INFO  main org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.76]
+2023-06-28 00:08:23 INFO  main org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2023-06-28 00:08:23 INFO  main org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 2892 ms
+2023-06-28 00:08:24 INFO  main org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8000"]
+2023-06-28 00:08:24 INFO  main org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8000 (http) with context path ''
+2023-06-28 00:08:24 INFO  main cn.soboys.restapispringbootstarter.RestApiSpringBootStarterApplication Started RestApiSpringBootStarterApplication in 6.208 seconds (JVM running for 7.59)
+2023-06-28 00:10:06 INFO  main cn.soboys.restapispringbootstarter.RestApiSpringBootStarterApplicationTests Starting RestApiSpringBootStarterApplicationTests using Java 1.8.0_362 on xiangyongdembp with PID 44851 (started by xiangyong in /Users/xiangyong/selfProject/project/rest-api-spring-boot-starter)
+2023-06-28 00:10:06 INFO  main cn.soboys.restapispringbootstarter.RestApiSpringBootStarterApplicationTests No active profile set, falling back to 1 default profile: "default"
+2023-06-28 00:10:06 INFO  background-preinit org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 6.2.5.Final
+2023-06-28 00:10:10 INFO  main cn.soboys.restapispringbootstarter.RestApiSpringBootStarterApplicationTests Started RestApiSpringBootStarterApplicationTests in 5.779 seconds (JVM running for 8.626)

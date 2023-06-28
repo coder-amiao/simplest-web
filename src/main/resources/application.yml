@@ -1,0 +1,16 @@
+rest-api:
+  enabled: false
+  logging:
+    path: ./logs
+  i18n:
+    # 若前端无header传参则返回中文信息
+    i18n-header: Lang
+    default-lang: cn
+    message:
+      # admin
+      internal_server_error:
+        en: Internal Server Error
+        cn: 系统错误
+      not_found:
+        en: Not Found
+        cn: 请求资源不存在
