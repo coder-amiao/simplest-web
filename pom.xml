@@ -10,12 +10,65 @@
     </parent>
     <groupId>cn.soboys</groupId>
     <artifactId>rest-api-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
     <name>rest-api-spring-boot-starter</name>
-    <description>rest-api-spring-boot-starter</description>
+    <description>SpringBoo Easy Fast Rest Api</description>
+    <url>https://github.com/coder-amiao/rest-api-spring-boot-starter</url>
+
+    <!-- 项目设定 -->
     <properties>
         <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <gpg.passphrase>1234qwer</gpg.passphrase>
+        <gpg.keyname>E933FBC878FB2EC0900A2ABAF79C3CD9E9E6A8EF</gpg.keyname>
+        <gpg.homedir>/Users/xiangyong/.gnupg</gpg.homedir>
     </properties>
+
+
+
+    <!-- 许可证信息，这里是Apache 2.0的许可证，大家根据实际情况修改 -->
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version2.0</name>
+            <url>https://www.apache.org/licenses/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+
+    <!--   开发人员信息         -->
+    <developers>
+        <developer>
+            <name>三时</name>
+            <email>xymarcus@163.com</email>
+        </developer>
+    </developers>
+
+    <!--   项目仓库信息         -->
+    <scm>
+        <connection>scm:git:https://github.com/zw201913/jtile38.git</connection>
+        <developerConnection>https://github.com/coder-amiao/rest-api-spring-boot-starter</developerConnection>
+        <url>https://github.com/coder-amiao/rest-api-spring-boot-starter.git</url>
+        <tag>v${project.version}</tag>
+    </scm>
+
+    <!-- 中央仓库地址配置，不需要修改 -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
 
         <dependency>
@@ -92,6 +145,60 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <!-- Source -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc工具 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <additionalJOptions>
+                        <additionalJOption>-Xdoclint:none</additionalJOption>
+                    </additionalJOptions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <configuration>
+                    <gpgArguments>
+                        <arg>--pinentry-mode</arg>
+                        <arg>loopback</arg>
+                    </gpgArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
