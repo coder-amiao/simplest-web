@@ -10,10 +10,10 @@
     </parent>
     <groupId>cn.soboys</groupId>
     <artifactId>rest-api-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
     <name>rest-api-spring-boot-starter</name>
-    <description>SpringBoo Easy Fast Rest Api</description>
+    <description>SpringBoot Easy Fast Rest Api 封装集成所有web Api操作支持国际化</description>
     <url>https://github.com/coder-amiao/rest-api-spring-boot-starter</url>
 
     <!-- 项目设定 -->
