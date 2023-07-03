@@ -1,8 +1,14 @@
 package cn.soboys.restapispringbootstarter.controller;
 
 
+import cn.soboys.restapispringbootstarter.Result;
 import cn.soboys.restapispringbootstarter.Student;
 
+import cn.soboys.restapispringbootstarter.utils.RedisTempUtil;
+import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -18,7 +24,13 @@ import java.util.HashMap;
  */
 @RestController
 @Validated
+@Slf4j
 public class ApiRestController {
+
+    @Autowired
+    private RedisTempUtil redisTempUtil;
+    @Autowired
+    private RestFulTemp restFulTemp;
 
     @GetMapping("/api")
     public HashMap index(@Validated Student student) {
@@ -28,5 +40,25 @@ public class ApiRestController {
         return m;
     }
 
+
+    @GetMapping("/redis")
+    public Result redis() {
+        redisTempUtil.set("test", "123456");
+        return Result.buildSuccess();
+    }
+
+
+    @GetMapping("/redis/get")
+    public Result redisGet() {
+        String value = redisTempUtil.get("test").toString();
+        log.info("redis值{}", value);
+        return Result.buildSuccess();
+    }
+
+    @GetMapping("/doGet")
+    public Result doGet() {
+        ResponseEntity<String> response = restFulTemp.doGet("http://127.0.0.1:8000/redis/get");
+        return Result.buildSuccess(response.getBody());
+    }
 
 }

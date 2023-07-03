@@ -3,7 +3,7 @@ package cn.soboys.restapispringbootstarter.utils;
 /**
  * String常量
  *
- * @author MrBird
+ * @author kenx
  */
 public interface Strings {
 

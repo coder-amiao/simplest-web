@@ -5,10 +5,10 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.soboys.restapispringbootstarter.exception.BusinessException;
+import cn.soboys.restapispringbootstarter.exception.LimitAccessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -46,7 +46,7 @@ public class ExceptionHandler {
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     public Result error(Exception e) {
-        log.error("未知异常{}",ExceptionUtil.stacktraceToString(e));
+        log.error("未知异常{}", ExceptionUtil.stacktraceToString(e));
         return Result.buildFailure(HttpStatus.INTERNAL_SERVER_ERROR, ExceptionUtil.stacktraceToString(e));
     }
 
@@ -162,5 +162,11 @@ public class ExceptionHandler {
     public Result HttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
                 StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), "JSON参数格式数据类型不对"));
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(LimitAccessException.class)
+    public Result LimitAccessExceptionException(LimitAccessException e) {
+        return Result.buildFailure(HttpStatus.REQUEST_TIMEOUT.getCode(),
+                StrUtil.format(HttpStatus.REQUEST_TIMEOUT.getMessage() + "{}", e.getMessage()));
     }
 }
