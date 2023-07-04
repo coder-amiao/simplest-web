@@ -1,6 +1,7 @@
 package cn.soboys.restapispringbootstarter.controller;
 
 
+import cn.soboys.restapispringbootstarter.Assert;
 import cn.soboys.restapispringbootstarter.Result;
 import cn.soboys.restapispringbootstarter.Student;
 
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -32,8 +35,8 @@ public class ApiRestController {
     @Autowired
     private RestFulTemp restFulTemp;
 
-    @GetMapping("/api")
-    public HashMap index(@Validated Student student) {
+    @PostMapping("/api")
+    public HashMap index(@Validated @RequestBody Student student) {
         HashMap m = new HashMap();
         m.put("age", 26);
         m.put("name", "Judy");
@@ -59,6 +62,13 @@ public class ApiRestController {
     public Result doGet() {
         ResponseEntity<String> response = restFulTemp.doGet("http://127.0.0.1:8000/redis/get");
         return Result.buildSuccess(response.getBody());
+    }
+
+    @GetMapping("/exception")
+    public Result exception(){
+        Student s=null;
+        Assert.isFalse(s==null,"学生不能为空");
+        return Result.buildSuccess();
     }
 
 }

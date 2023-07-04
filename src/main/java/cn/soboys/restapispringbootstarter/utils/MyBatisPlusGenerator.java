@@ -1,6 +1,10 @@
 package cn.soboys.restapispringbootstarter.utils;
 
 import java.util.ArrayList;
+
+
+import cn.hutool.core.util.StrUtil;
+import cn.soboys.restapispringbootstarter.config.GenerateCodeConfig;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -11,6 +15,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +27,10 @@ import java.util.Scanner;
  * @date 2023/6/27 23:52
  * @webSite https://github.com/coder-amiao
  */
+
 public class MyBatisPlusGenerator {
+
+
     /**
      * <p>
      * 读取控制台内容
@@ -42,14 +50,25 @@ public class MyBatisPlusGenerator {
         throw new MybatisPlusException("请输入正确的" + tip + "！");
     }
 
-    public static void main(String[] args) {
+    /**
+     * 代码生成配置
+     *
+     * @param config
+     */
+    public static void generate(GenerateCodeConfig config) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir")+"/kchat";
-        gc.setOutputDir(projectPath + "/src/main/java");
+        final String[] projectPath = new String[1];
+        projectPath[0] = System.getProperty("user.dir");
+        //String projectPath = System.getProperty("user.dir");
+
+        if (StrUtil.isNotEmpty(config.getProjectPath())) {
+            projectPath[0] = config.getProjectPath();
+        }
+        gc.setOutputDir(projectPath[0] + "/src/main/java");
         gc.setAuthor("公众号 程序员三时");
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
@@ -57,17 +76,17 @@ public class MyBatisPlusGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/ry?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl(config.getUrl());
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setDriverName(config.getDriverName());
+        dsc.setUsername(config.getUsername());
+        dsc.setPassword(config.getPassword());
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
         //pc.setModuleName(scanner("模块名"));
-        pc.setParent("soboys.cn.kchat");
+        pc.setParent(config.getPackages());
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -90,7 +109,7 @@ public class MyBatisPlusGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
+                return projectPath[0] + "/src/main/resources/mapper/" + pc.getModuleName()
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });

@@ -13,16 +13,16 @@ public enum HttpStatus implements ResultCode, I18NKey {
      * 系统内部错误
      */
     INTERNAL_SERVER_ERROR("500", "internal_server_error"),
-    BAD_GATEWAY("502", "错误的请求"),
+    BAD_GATEWAY("502", "bad_gateway"),
     NOT_FOUND("404", "not_found"),
-    UNAUTHORIZED("401", "未授权"),
-    FORBIDDEN("403", "资源禁止访问"),
-    METHOD_NOT_ALLOWED("405", "方法不被允许"),
-    REQUEST_TIMEOUT("408", "请求超时"),
+    UNAUTHORIZED("401", "unauthorized"),
+    FORBIDDEN("403", "forbidden"),
+    METHOD_NOT_ALLOWED("405", "method_not_allowed"),
+    REQUEST_TIMEOUT("408", "request_timeout"),
 
-    INVALID_ARGUMENT("10000", "参数错误{}"),
-    ARGUMENT_ANALYZE("10001", "参数解析异常"),
-    BUSINESS_EXCEPTION("20000", "业务错误");
+    INVALID_ARGUMENT("10000", "invalid_argument"),
+    ARGUMENT_ANALYZE("10001", "argument_analyze"),
+    BUSINESS_EXCEPTION("20000", "business_exception");
 
 
     private final String value;

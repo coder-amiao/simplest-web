@@ -24,7 +24,7 @@ public class ApplicationRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         String path = restApiProperties.getPath();
         if (StrUtil.isBlank(path)) {
-            log.error("找不大restApi接口日志配置路径请设置路径");
+            //log.error("找不大restApi接口日志配置路径请设置路径");
         }
     }
 }

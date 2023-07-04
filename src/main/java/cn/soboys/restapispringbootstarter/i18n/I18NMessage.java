@@ -16,7 +16,6 @@ import java.util.Optional;
  * @date 2023/6/26 11:55
  * @webSite https://github.com/coder-amiao
  */
-//@PropertySource(value = "classpath:i18n.yaml", factory = YamlPropertySourceFactory.class)
 @Configuration
 @ConfigurationProperties(prefix = "rest-api.i18n")
 @Data
@@ -24,6 +23,7 @@ public class I18NMessage {
     /**
      * message-key:<lang:message>
      */
+
     private Map<String, Map<String, String>> message;
     /**
      * Default language setting (Default "cn").
@@ -33,6 +33,12 @@ public class I18NMessage {
 
     private String i18nHeader = "Lang";
 
+    /**
+     * 初始化message 国际化数据
+     */
+    static {
+
+    }
 
     /**
      * get i18n message

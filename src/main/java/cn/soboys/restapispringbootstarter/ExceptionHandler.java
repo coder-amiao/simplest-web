@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
@@ -71,11 +72,12 @@ public class ExceptionHandler {
      * 验证  对象类型参数
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(BindException.class)
-    public Result BindExceptionHandler(BindException e) {
+    public Result BindExceptionHandler(BindException e, HttpServletRequest request) {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         List<String> collect = fieldErrors.stream()
                 .map(o -> o.getField() + o.getDefaultMessage())
                 .collect(Collectors.toList());
+        request.setAttribute("argument_error",CollUtil.join(collect, ";"));
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
                 StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), CollUtil.join(collect, ";")));
     }
@@ -84,7 +86,7 @@ public class ExceptionHandler {
      * 验证 单个参数类型
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(ConstraintViolationException.class)
-    public Result ConstraintViolationExceptionHandler(ConstraintViolationException e) {
+    public Result ConstraintViolationExceptionHandler(ConstraintViolationException e,HttpServletRequest request) {
         List errorList = CollectionUtil.newArrayList();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
@@ -99,6 +101,7 @@ public class ExceptionHandler {
             }
             errorList.add(msg);
         }
+        request.setAttribute("argument_error",CollUtil.join(errorList, ";"));
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
                 StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), CollUtil.join(errorList, ";")));
     }
@@ -108,7 +111,7 @@ public class ExceptionHandler {
      * 验证  对象类型参数 JSON body 参数
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result jsonParamsException(MethodArgumentNotValidException e) {
+    public Result jsonParamsException(MethodArgumentNotValidException e,HttpServletRequest request) {
         BindingResult bindingResult = e.getBindingResult();
         List errorList = CollectionUtil.newArrayList();
 
@@ -116,7 +119,7 @@ public class ExceptionHandler {
             String msg = String.format("%s%s；", fieldError.getField(), fieldError.getDefaultMessage());
             errorList.add(msg);
         }
-
+        request.setAttribute("argument_error",CollUtil.join(errorList, ";"));
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
                 StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), CollUtil.join(errorList, ";")));
     }
@@ -149,7 +152,7 @@ public class ExceptionHandler {
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public Result httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        return Result.buildFailure(HttpStatus.BAD_GATEWAY);
+        return Result.buildFailure(HttpStatus.BAD_GATEWAY,e.getMessage());
     }
 
     /**

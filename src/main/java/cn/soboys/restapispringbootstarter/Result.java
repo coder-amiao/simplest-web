@@ -1,13 +1,22 @@
 package cn.soboys.restapispringbootstarter;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.soboys.restapispringbootstarter.i18n.DefaultMessage;
 import cn.soboys.restapispringbootstarter.i18n.I18NMessage;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -17,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  * @webSite https://github.com/coder-amiao
  */
 @Data
+@Slf4j
 public class Result<T> {
     private static final String SUCCESS_CODE = "OK";
     private static final String ERROR_CODE = "FAIL";
@@ -28,6 +38,7 @@ public class Result<T> {
 
 
     private static final I18NMessage i18NMessage = SpringUtil.getBean(I18NMessage.class);
+    private static final DefaultMessage defaultMessage = SpringUtil.getBean(DefaultMessage.class);
 
     private Boolean success;
 
@@ -43,9 +54,26 @@ public class Result<T> {
     public Result(Boolean success, String code, String msg, T data) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
+
+        if (CollUtil.isEmpty(i18NMessage.getMessage())) {
+            i18NMessage.setMessage(defaultMessage.getMessage());
+        } else {
+            /**
+             * 系统默认的国际化。加上用户自定义，如果用户覆盖使用用户的
+             */
+            // 使用 Stream API 合并两个 Map
+            Map<String, Map<String, String>> result = Stream.of(i18NMessage.getMessage(), defaultMessage.getMessage())
+                    .flatMap(map -> map.entrySet().stream())
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (v1, v2) -> v1  // 如果有重复的键，选择第一个 Map 中的值
+                    ));
+            i18NMessage.setMessage(result);
+        }
         this.success = success;
         this.code = code;
-        this.msg = i18NMessage.message(msg, request.getHeader(i18NMessage.getI18nHeader()));
+        this.msg = StrUtil.format(i18NMessage.message(msg, request.getHeader(i18NMessage.getI18nHeader())), request.getAttribute("argument_error") == null ? "" : request.getAttribute("argument_error"));
         this.data = data;
     }
 

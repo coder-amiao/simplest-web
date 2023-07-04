@@ -1,5 +1,6 @@
 package cn.soboys.restapispringbootstarter.config;
 
+import cn.hutool.extra.spring.EnableSpringUtil;
 import cn.soboys.restapispringbootstarter.ApplicationRunner;
 import cn.soboys.restapispringbootstarter.ExceptionHandler;
 import cn.soboys.restapispringbootstarter.ResultHandler;
@@ -34,6 +35,8 @@ import java.util.List;
  */
 @Configuration
 @ConditionalOnProperty(name = "rest-api.enabled", havingValue = "true")
+
+@EnableSpringUtil
 public class BeanAutoConfiguration {
 
 

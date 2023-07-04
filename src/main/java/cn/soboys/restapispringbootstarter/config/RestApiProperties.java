@@ -23,7 +23,9 @@ public class RestApiProperties {
     @Data
    public class LoggingProperties {
         private String path;
+        private String maxHistory ;
+        private String maxFileSize;
+        private String maxTotalSizeCap;
+        private String levelRoot;
     }
-
-
 }
