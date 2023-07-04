@@ -1,8 +1,10 @@
 package cn.soboys.restapispringbootstarter.config;
 
+import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -53,4 +55,5 @@ public class RestTemplateConfig {
         factory.setReadTimeout(5000);
         return factory;
     }
+
 }

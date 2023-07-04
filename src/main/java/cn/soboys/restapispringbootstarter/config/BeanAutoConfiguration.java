@@ -6,16 +6,13 @@ import cn.soboys.restapispringbootstarter.ExceptionHandler;
 import cn.soboys.restapispringbootstarter.ResultHandler;
 import cn.soboys.restapispringbootstarter.aop.LimitAspect;
 import cn.soboys.restapispringbootstarter.i18n.I18NMessage;
-import cn.soboys.restapispringbootstarter.utils.RedisTempUtil;
+
+
 import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -27,16 +24,16 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.Charset;
 import java.util.List;
 
+
 /**
  * @author 公众号 程序员三时
  * @version 1.0
  * @date 2023/6/27 11:36
  * @webSite https://github.com/coder-amiao
  */
-@Configuration
-@ConditionalOnProperty(name = "rest-api.enabled", havingValue = "true")
-
-@EnableSpringUtil
+//@Configuration
+//@ConditionalOnProperty(name = "rest-api.enabled", havingValue = "true")
+//@EnableSpringUtil
 public class BeanAutoConfiguration {
 
 
@@ -77,14 +74,8 @@ public class BeanAutoConfiguration {
     }
 
 
+    public class RestTemplateConfig {
 
-
-    /**
-     * restTemplate 自动注入
-     */
-    @Configuration
-    @ConditionalOnProperty(name = "rest-api.enabled", havingValue = "true")
-    class RestTemplateConfig {
         /**
          * 第三方请求要求的默认编码
          */
@@ -122,7 +113,5 @@ public class BeanAutoConfiguration {
         public RestFulTemp restFulTemp() {
             return new RestFulTemp();
         }
-
     }
-
 }

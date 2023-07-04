@@ -1,6 +1,7 @@
 package cn.soboys.restapispringbootstarter.annotation;
 
 import cn.soboys.restapispringbootstarter.config.BeanAutoConfiguration;
+
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -17,7 +18,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import(BeanAutoConfiguration.class)
+@Import({BeanAutoConfiguration.class,BeanAutoConfiguration.RestTemplateConfig.class})
 public @interface EnableRestFullApi {
 
 }
