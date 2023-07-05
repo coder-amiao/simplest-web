@@ -24,7 +24,7 @@
 
 ![](https://images.soboys.cn/202307051540748.png)
 
-目前更新版本1.3.0 支持功能如下
+目前更新版本到1.3.0 支持功能如下
 1. 支持一键配置自定义RestFull API 统一格式返回
 2. 支持RestFull API 错误国际化
 3. 支持全局异常处理，全局参数验证处理
@@ -36,14 +36,14 @@
 9. 集成mybatisPlus一键代码生成
 
 
-[详细使用文档官网](http://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)
+[详细使用文档官网](http://rest-api-boot.soboys.cn)
 
 在使用过程中尽量使用最新版本。我会持续更新更多的内容。 会第一时间发布在我的公众号
 程序员三时。 全网同名
 
-::: tip
+
 可以关注 公众号 程序员三时。用心分享持续输出优质内容。
-:::
+
 
 ![](https://images.soboys.cn/202307052317593.jpg)
 
