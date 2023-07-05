@@ -36,7 +36,7 @@
 9. 集成mybatisPlus一键代码生成
 
 
-[详细使用文档官网](http://rest-api-boot.soboys.cn)
+[详细使用文档官网](https://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)
 
 在使用过程中尽量使用最新版本。我会持续更新更多的内容。 会第一时间发布在我的公众号
 程序员三时。 全网同名
