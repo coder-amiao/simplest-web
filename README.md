@@ -1,16 +1,3 @@
-
-**SpringBoot Easy Fast Rest WEB**
-
-- [RestFull API使用](#restfull-api%E4%BD%BF%E7%94%A8)
-- [全局错误拦截，参数校验](#%E5%85%A8%E5%B1%80%E9%94%99%E8%AF%AF%E6%8B%A6%E6%88%AA%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C)
-- [错误国际化](#%E9%94%99%E8%AF%AF%E5%9B%BD%E9%99%85%E5%8C%96)
-- [自定义错误响应](#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94)
-- [业务异常断言](#%E4%B8%9A%E5%8A%A1%E5%BC%82%E5%B8%B8%E6%96%AD%E8%A8%80)
-- [Redis 工具库使用](#redis-%E5%B7%A5%E5%85%B7%E5%BA%93%E4%BD%BF%E7%94%A8)
-- [RestTemplate 请求工具](#resttemplate-%E8%AF%B7%E6%B1%82%E5%B7%A5%E5%85%B7)
-- [日志使用](#%E6%97%A5%E5%BF%97%E4%BD%BF%E7%94%A8)
-- [集成mybatisPlus一键代码生成](#%E9%9B%86%E6%88%90mybatisplus%E4%B8%80%E9%94%AE%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90)
-
 基于SpringBoot Web 快速构建API脚手架 解决重复繁琐工作 高效开发SpringBoot Web API 接口
 
 之前我们已经，出了一些列文章。 讲解如何封统一全局响应Restful API。
@@ -49,7 +36,7 @@
 9. 集成mybatisPlus一键代码生成
 
 
-[使用文档](http://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)
+[详细使用文档官网](http://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)
 
 在使用过程中尽量使用最新版本。我会持续更新更多的内容。 会第一时间发布在我的公众号
 程序员三时。 全网同名
