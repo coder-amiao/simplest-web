@@ -33,11 +33,11 @@
 
 后续我萌生里新的想法，SpringBoot 不是提供了自己的starter。我们也可以自定义**starter**吗，于是我定义了**rest-api-spring-boot-starter**，已经发布到maven中央仓库，对之前Restful API 响应框架 做了集成和重构，
 
-在这个基础上我又总结封装了我自己工作以常用的很多工具，结合SpringBoot 封装了全能的工具。 已经更新到了1.2.0 不耦合任何依赖
+在这个基础上我又总结封装了我自己工作以常用的很多工具，结合SpringBoot 封装了全能的工具。 已经更新到了1.3.0 不耦合任何依赖
 
-![](https://images.soboys.cn/202307032138181.png)
+![](https://images.soboys.cn/202307051540748.png)
 
-目前更新版本1.2.0 功能如下
+目前更新版本1.3.0 功能如下
 1. 支持一键配置自定义RestFull API 统一格式返回
 2. 支持RestFull API 错误国际化
 3. 支持全局异常处理，全局参数验证处理
