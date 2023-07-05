@@ -1,6 +1,5 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+**SpringBoot Easy Fast Rest WEB**
 
 - [RestFull API使用](#restfull-api%E4%BD%BF%E7%94%A8)
 - [全局错误拦截，参数校验](#%E5%85%A8%E5%B1%80%E9%94%99%E8%AF%AF%E6%8B%A6%E6%88%AA%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C)
