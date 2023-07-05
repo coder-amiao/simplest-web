@@ -38,20 +38,13 @@ public class RestFulTemp {
         return response;
     }
 
-    public ResponseEntity<String> doPost(String url, String jsonStr) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        HttpEntity<String> entity = new HttpEntity<>(jsonStr, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
-        return response;
-    }
 
-    public ResponseEntity<String> doPost(String url, Map<String, String> map) {
+    public ResponseEntity<String> doPostForm(String url, Map<String, Object> map) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            params.add(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            params.add(entry.getKey(), entry.getValue().toString());
         }
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
         return restTemplate.postForEntity(url, entity, String.class);
@@ -76,8 +69,8 @@ public class RestFulTemp {
         return responseEntity.getBody();
     }
 
-    public String doDelete(String url) {
+    public ResponseEntity<String> doDelete(String url) {
         ResponseEntity<String> responseEntity = this.restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
-        return responseEntity.getBody();
+        return responseEntity;
     }
 }

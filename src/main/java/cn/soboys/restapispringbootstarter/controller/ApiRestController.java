@@ -1,9 +1,9 @@
 package cn.soboys.restapispringbootstarter.controller;
 
 
-import cn.soboys.restapispringbootstarter.Assert;
+import cn.hutool.core.bean.BeanUtil;
 import cn.soboys.restapispringbootstarter.Result;
-import cn.soboys.restapispringbootstarter.Student;
+import cn.soboys.restapispringbootstarter.EntityParam;
 
 import cn.soboys.restapispringbootstarter.utils.RedisTempUtil;
 import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
@@ -11,13 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 
 /**
  * @author 公众号 程序员三时
@@ -35,40 +32,47 @@ public class ApiRestController {
     @Autowired
     private RestFulTemp restFulTemp;
 
-    @PostMapping("/api")
-    public HashMap index(@Validated @RequestBody Student student) {
-        HashMap m = new HashMap();
-        m.put("age", 26);
-        m.put("name", "Judy");
-        return m;
+
+
+
+    @PostMapping("/chat")
+    public Result chatDialogue( @Validated EntityParam s) {
+        return Result.buildSuccess(s);
     }
 
 
-    @GetMapping("/redis")
-    public Result redis() {
-        redisTempUtil.set("test", "123456");
+    @GetMapping("/doDelete")
+    public Result doDelete() {
+        restFulTemp.doDelete("http://127.0.0.1:8000/chat");
         return Result.buildSuccess();
     }
 
 
-    @GetMapping("/redis/get")
-    public Result redisGet() {
-        String value = redisTempUtil.get("test").toString();
-        log.info("redis值{}", value);
-        return Result.buildSuccess();
+    @GetMapping("/doPut")
+    public Result doPut() {
+        EntityParam s=new EntityParam();
+        restFulTemp.doPut("http://127.0.0.1:8000/chat",s);
+        return Result.buildSuccess(s);
     }
 
-    @GetMapping("/doGet")
-    public Result doGet() {
-        ResponseEntity<String> response = restFulTemp.doGet("http://127.0.0.1:8000/redis/get");
+
+    /**
+     * POST FORM 表单参数
+     * @return
+     */
+    @PostMapping("/doPost")
+    public Result doPostForm() {
+        EntityParam s=new EntityParam();
+        s.setAge(19);
+        s.setHobby("swing");
+        s.setName("judy");
+
+        ResponseEntity<String> response =
+                restFulTemp.doPostForm("http://127.0.0.1:8000/chat", BeanUtil.beanToMap(s));
         return Result.buildSuccess(response.getBody());
     }
 
-    @GetMapping("/exception")
-    public Result exception(){
-        Student s=null;
-        Assert.isFalse(s==null,"学生不能为空");
-        return Result.buildSuccess();
-    }
+
+
 
 }

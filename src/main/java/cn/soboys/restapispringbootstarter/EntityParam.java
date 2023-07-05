@@ -1,9 +1,9 @@
 package cn.soboys.restapispringbootstarter;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author 公众号 程序员三时
@@ -12,9 +12,11 @@ import javax.validation.constraints.NotBlank;
  * @webSite https://github.com/coder-amiao
  */
 @Data
-public class Student {
+public class EntityParam {
     @NotBlank
-    private String nam;
+    private String name;
     @NotBlank
     private String hobby;
+    @NotNull
+    private Integer age;
 }
