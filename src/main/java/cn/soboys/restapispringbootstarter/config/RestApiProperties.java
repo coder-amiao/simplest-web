@@ -15,8 +15,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "rest-api")
 @Data
 public class RestApiProperties {
-    private boolean enabled;
 
+    private boolean enabled;
 
     @Configuration
     @ConfigurationProperties(prefix = "rest-api.logging")

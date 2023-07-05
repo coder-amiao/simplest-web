@@ -6,13 +6,6 @@ rest-api:
     max-file-size: 3MB  # 每个文件大小
     max-total-size-cap: 1GB  #总文件大小超过多少压缩
     level-root: INFO    # 这里的INFO可以替换为其他日志等级，如DEBUG, WARN, ERROR, TRACE, FATAL, OFF等。 日志等级由低到高分别是debugger-info-warn-error
-  generate:
-    driver-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
-    url: jdbc:mysql://127.0.0.1:3306/ry?useUnicode=true&useSSL=false&characterEncoding=utf8
-    project-path: rest-api-spring-boot-starter   # 当前项目名称相对路径
-    packages: cn.soboys.restapispringbootstarter  # 包名
   i18n:
     # 若前端无header传参则返回中文信息
     i18n-header: Lang
