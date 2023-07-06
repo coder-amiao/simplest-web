@@ -20,7 +20,7 @@
 
 后续我萌生里新的想法，SpringBoot 不是提供了自己的starter。我们也可以自定义**starter**吗，于是我定义了**rest-api-spring-boot-starter**，已经发布到maven中央仓库，对之前Restful API 响应框架 做了集成和重构，
 
-在这个基础上我又总结封装了我自己工作以常用的很多工具，结合SpringBoot 封装了全能的工具。 已经更新到了1.3.0 不耦合任何依赖
+在这个基础上我又总结封装了我自己工作常用的很多工具，结合SpringBoot 封装了全能的工具。 已经更新到了1.3.0 不耦合任何依赖
 
 ![](https://images.soboys.cn/202307051540748.png)
 
