@@ -22,8 +22,9 @@ public enum HttpStatus implements ResultCode, I18NKey {
 
     INVALID_ARGUMENT("10000", "invalid_argument"),
     ARGUMENT_ANALYZE("10001", "argument_analyze"),
-    BUSINESS_EXCEPTION("20000", "business_exception");
 
+    BUSINESS_EXCEPTION("20000", "business_exception"),
+    CACHE_EXCEPTION("20001", "CACHE_EXCEPTION");
 
     private final String value;
 

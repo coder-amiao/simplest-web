@@ -28,6 +28,9 @@ i18n:
     business_exception:
       en: Business Exception
       cn: 业务错误
+    cache_exception:
+      en: Cache Exception
+      cn: 缓存错误
     not_found:
       en: Not Found
       cn: 请求资源不存在

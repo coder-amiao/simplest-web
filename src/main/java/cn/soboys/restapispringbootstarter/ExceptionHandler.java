@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.soboys.restapispringbootstarter.exception.BusinessException;
+import cn.soboys.restapispringbootstarter.exception.CacheException;
 import cn.soboys.restapispringbootstarter.exception.LimitAccessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -152,7 +153,7 @@ public class ExceptionHandler {
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public Result httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        return Result.buildFailure(HttpStatus.BAD_GATEWAY,e.getMessage());
+        return Result.buildFailure(HttpStatus.BAD_GATEWAY,ExceptionUtil.stacktraceToString(e));
     }
 
     /**
@@ -164,12 +165,25 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
     public Result HttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
-                StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), "JSON参数格式数据类型不对"));
+                StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), "JSON参数格式数据类型不对"),ExceptionUtil.stacktraceToString(e));
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(LimitAccessException.class)
     public Result LimitAccessExceptionException(LimitAccessException e) {
         return Result.buildFailure(HttpStatus.REQUEST_TIMEOUT.getCode(),
-                StrUtil.format(HttpStatus.REQUEST_TIMEOUT.getMessage() + "{}", e.getMessage()));
+                StrUtil.format(HttpStatus.REQUEST_TIMEOUT.getMessage() + "{}", e.getMessage()),ExceptionUtil.stacktraceToString(e));
+    }
+
+
+    /**
+     * 统一业务异常处理
+     *
+     * @param e
+     * @return
+     */
+    @org.springframework.web.bind.annotation.ExceptionHandler(CacheException.class)
+    public Result CacheException(CacheException e) {
+        return Result.buildFailure(HttpStatus.CACHE_EXCEPTION.getCode(),
+                StrUtil.format(HttpStatus.CACHE_EXCEPTION.getMessage() + "{}", e.getMessage()),ExceptionUtil.stacktraceToString(e));
     }
 }

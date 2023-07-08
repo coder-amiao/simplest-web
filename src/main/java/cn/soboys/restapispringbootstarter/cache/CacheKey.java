@@ -1,7 +1,11 @@
-package cn.soboys.restapispringbootstarter.enums;
+package cn.soboys.restapispringbootstarter.cache;
 
+import cn.soboys.restapispringbootstarter.exception.CacheException;
+import cn.soboys.restapispringbootstarter.utils.RedisTempUtil;
 import lombok.Getter;
-import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 公众号 程序员三时
@@ -11,7 +15,9 @@ import lombok.Setter;
  * 缓存枚举
  */
 @Getter
-public enum CacheKey {
+public enum CacheKey implements CacheTmp {
+
+
     // 密码的重置码
     PWD_RESET_CODE("reset:code:", true),
     ;
@@ -26,6 +32,17 @@ public enum CacheKey {
     CacheKey(String key, boolean hasPrefix) {
         this.key = key;
         this.hasPrefix = hasPrefix;
+    }
+
+
+    @Override
+    public Boolean getHasPrefix() {
+        return this.hasPrefix;
+    }
+
+    @Override
+    public String getKey() {
+        return this.key;
     }
 
 }

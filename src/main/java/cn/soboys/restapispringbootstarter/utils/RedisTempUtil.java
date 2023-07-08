@@ -2,6 +2,7 @@ package cn.soboys.restapispringbootstarter.utils;
 
 import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
+import org.springframework.stereotype.Component;
 
 
 import javax.annotation.Resource;
@@ -26,6 +28,16 @@ import java.util.concurrent.TimeUnit;
 @ImportAutoConfiguration(RedisAutoConfiguration.class)
 @Configuration(proxyBeanMethods = true)
 public class RedisTempUtil {
+
+    private static RedisTempUtil instance;
+
+
+    public static RedisTempUtil getInstance() {
+        return SpringUtil.getBean(RedisTempUtil.class);
+    }
+
+
+
     @Resource
     private RedisTemplate redisTemplate;
 
@@ -35,8 +47,8 @@ public class RedisTempUtil {
         return redisTemplate.hasKey(key);
     }
 
-    public void delete(String key) {
-        redisTemplate.delete(key);
+    public Boolean delete(String key) {
+       return redisTemplate.delete(key);
     }
 
     public boolean exists(String key) {
@@ -239,4 +251,5 @@ public class RedisTempUtil {
     public Set<Object> zRange(String key, long start, long end) {
         return redisTemplate.opsForZSet().range(key, start, end);
     }
+
 }

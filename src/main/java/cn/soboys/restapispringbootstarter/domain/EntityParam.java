@@ -1,4 +1,4 @@
-package cn.soboys.restapispringbootstarter;
+package cn.soboys.restapispringbootstarter.domain;
 
 import lombok.Data;
 

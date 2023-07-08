@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.soboys</groupId>
     <artifactId>rest-api-spring-boot-starter</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <packaging>jar</packaging>
     <name>rest-api-spring-boot-starter</name>
     <description>SpringBoot Easy Fast Rest WEB 提高SpringBoot Web开发工作效率 RestFull API使用 全局错误拦截，参数校验, 错误国际化 ,自定义错误响应 ,业务异常断言 ,Redis 工具库使用 ,RestTemplate 请求工具 ,日志使用 ,集成mybatisPlus一键代码生成</description>
@@ -123,6 +123,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
         <!--封装mybatisPlus 代码生成工具类-->
