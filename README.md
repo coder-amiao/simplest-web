@@ -29,11 +29,12 @@
 2. 支持RestFull API 错误国际化
 3. 支持全局异常处理，全局参数验证处理
 4. 业务错误断言工具封装，遵循错误优先返回原则
-5. redis工作封装。支持所有key操作工具
+5. 封装Redis key,value 操作工具类。统一key管理 spring cache缓存实现
 6. RestTemplate 封装 POST,GET 请求工具
 7. 日志集成。自定义日志路径，按照日志等级分类，支持压缩和文件大小分割。按时间显示
 8. 工具库集成 集成了lombok，hutool，commons-lang3，guava。不需要自己单个引入
 9. 集成mybatisPlus一键代码生成
+10. 日志记录，服务监控，支持日志链路查询。自定义数据源
 
 
 [详细使用文档官网](https://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)

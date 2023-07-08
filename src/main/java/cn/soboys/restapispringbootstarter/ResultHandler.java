@@ -109,6 +109,7 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
                 resultMap.put(keyMsg, r.getMsg());
             }
             resultMap.put("timestamp", r.getTimestamp());
+            resultMap.put("requestId",r.getRequestId());
             if (r.getData() != null && r.getData() instanceof ResultPage) {
                 ResultPage resultPage = (ResultPage) r.getData();
                 if (StrUtil.isNotEmpty(keyPreviousPage)) {
