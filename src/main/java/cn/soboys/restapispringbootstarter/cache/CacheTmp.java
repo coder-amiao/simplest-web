@@ -1,7 +1,6 @@
 package cn.soboys.restapispringbootstarter.cache;
 
 import cn.soboys.restapispringbootstarter.exception.CacheException;
-import cn.soboys.restapispringbootstarter.utils.RedisTempUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.concurrent.TimeUnit;

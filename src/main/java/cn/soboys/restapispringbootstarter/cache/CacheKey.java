@@ -1,11 +1,6 @@
 package cn.soboys.restapispringbootstarter.cache;
 
-import cn.soboys.restapispringbootstarter.exception.CacheException;
-import cn.soboys.restapispringbootstarter.utils.RedisTempUtil;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author 公众号 程序员三时

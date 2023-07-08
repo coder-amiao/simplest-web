@@ -3,10 +3,12 @@ package cn.soboys.restapispringbootstarter.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.soboys.restapispringbootstarter.Result;
+import cn.soboys.restapispringbootstarter.ResultPage;
 import cn.soboys.restapispringbootstarter.domain.EntityParam;
 
 import cn.soboys.restapispringbootstarter.cache.CacheKey;
-import cn.soboys.restapispringbootstarter.utils.RedisTempUtil;
+import cn.soboys.restapispringbootstarter.cache.RedisTempUtil;
+import cn.soboys.restapispringbootstarter.log.Log;
 import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,10 +41,20 @@ public class ApiRestController {
     private RestFulTemp restFulTemp;
 
 
-
     @PostMapping("/chat")
     public Result chatDialogue(@Validated EntityParam s) {
         return Result.buildSuccess(s);
+    }
+
+
+    @PostMapping("/page")
+    @Log("查询用户数据")
+    public Result page(@Validated EntityParam s) {
+        ResultPage<List<EntityParam>> resultPage=new ResultPage<>();
+        List a=new ArrayList();
+        a.add(s);
+        resultPage.setPageData(a);
+        return ResultPage.buildSuccess(resultPage);
     }
 
 
@@ -91,7 +105,7 @@ public class ApiRestController {
     }
 
 
-    @Cacheable(cacheNames = "testCache",keyGenerator = "keyGeneratorStrategy")
+    @Cacheable(cacheNames = "testCache", keyGenerator = "keyGeneratorStrategy")
     @GetMapping("/redis/springCache")
     public Result springCache() {
         String a = "test cache";

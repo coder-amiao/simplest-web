@@ -3,6 +3,7 @@ package cn.soboys.restapispringbootstarter;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.soboys.restapispringbootstarter.domain.BaseObj;
@@ -31,10 +32,10 @@ import java.util.stream.Stream;
 @Slf4j
 public class Result<T> extends BaseObj{
 
-    private static final String SUCCESS_CODE = "OK";
-    private static final String ERROR_CODE = "FAIL";
-    private static final String MSG = "操作成功";
-    private static final String ERROR_MSG = "操作失败";
+    public static final String SUCCESS_CODE = "OK";
+    public static final String ERROR_CODE = "FAIL";
+    public static final String MSG = "操作成功";
+    public static final String ERROR_MSG = "操作失败";
     private static final String TIMESTAMP = DateUtil.now();
 
     private static final String I18N_HEADER = "Lang";
@@ -51,6 +52,8 @@ public class Result<T> extends BaseObj{
     private String code;
 
     private String msg;
+
+    private String requestId= IdUtil.nanoId(20);
 
     private String timestamp = TIMESTAMP;
 

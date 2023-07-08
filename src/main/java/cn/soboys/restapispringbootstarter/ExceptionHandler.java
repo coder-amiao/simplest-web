@@ -142,7 +142,7 @@ public class ExceptionHandler {
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        return Result.buildFailure(HttpStatus.METHOD_NOT_ALLOWED, e.getMessage());
+        return Result.buildFailure(HttpStatus.METHOD_NOT_ALLOWED, ExceptionUtil.stacktraceToString(e));
     }
 
     /**

@@ -1,6 +1,7 @@
 package cn.soboys.restapispringbootstarter.annotation;
 
 import cn.soboys.restapispringbootstarter.cache.RedisConfig;
+import cn.soboys.restapispringbootstarter.cache.SpringCacheConfig;
 import cn.soboys.restapispringbootstarter.config.BeanAutoConfiguration;
 
 import org.springframework.context.annotation.Import;
@@ -19,7 +20,9 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import({BeanAutoConfiguration.class,BeanAutoConfiguration.RestTemplateConfig.class, RedisConfig.class})
+@Import(
+        {BeanAutoConfiguration.class,BeanAutoConfiguration.RestTemplateConfig.class,
+                SpringCacheConfig.class, RedisConfig.class})
 public @interface EnableRestFullApi {
 
 }

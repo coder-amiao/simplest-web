@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,8 +31,7 @@ import java.util.Arrays;
  * @webSite https://github.com/coder-amiao
  */
 @Configuration
-@Slf4j
- //开启缓存注解驱动，否则后面使用的缓存都是无效的
+@EnableCaching //开启缓存注解驱动，否则后面使用的缓存都是无效的
 public class SpringCacheConfig {
 
     @Autowired
@@ -80,4 +82,7 @@ public class SpringCacheConfig {
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance ,ObjectMapper.DefaultTyping.NON_FINAL);
         return new GenericJackson2JsonRedisSerializer(om);
     }
+
+
+
 }

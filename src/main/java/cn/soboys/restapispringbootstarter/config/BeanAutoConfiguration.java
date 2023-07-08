@@ -5,6 +5,7 @@ import cn.soboys.restapispringbootstarter.ApplicationRunner;
 import cn.soboys.restapispringbootstarter.ExceptionHandler;
 import cn.soboys.restapispringbootstarter.ResultHandler;
 import cn.soboys.restapispringbootstarter.aop.LimitAspect;
+import cn.soboys.restapispringbootstarter.aop.LogAspect;
 import cn.soboys.restapispringbootstarter.cache.SpringCacheConfig;
 import cn.soboys.restapispringbootstarter.cache.SpringCacheUtil;
 import cn.soboys.restapispringbootstarter.i18n.I18NMessage;
@@ -81,14 +82,12 @@ public class BeanAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnClass({RedisOperations.class, Cache.class})
-    public SpringCacheConfig springCacheConfig(){
-        return new SpringCacheConfig();
+    public LogAspect logAspect() {
+        return new LogAspect();
     }
 
     @Bean
-    @ConditionalOnClass({RedisOperations.class, Cache.class})
-    public SpringCacheUtil springCacheUtil(){
+    public SpringCacheUtil springCacheUtil() {
         return new SpringCacheUtil();
     }
 

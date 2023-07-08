@@ -1,8 +1,12 @@
 package cn.soboys.restapispringbootstarter.cache;
 
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -13,7 +17,9 @@ import javax.annotation.Resource;
  * @date 2023/7/7 10:13
  * @webSite https://github.com/coder-amiao
  */
-@Component
+
+@ImportAutoConfiguration(CacheAutoConfiguration.class)
+@Configuration(proxyBeanMethods = true)
 public class SpringCacheUtil {
 
     @Resource

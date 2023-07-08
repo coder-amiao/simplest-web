@@ -1,7 +1,19 @@
 package cn.soboys.restapispringbootstarter;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import cn.soboys.restapispringbootstarter.annotation.NoRestFulApi;
+import cn.soboys.restapispringbootstarter.config.RestApiProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -11,6 +23,9 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 公众号 程序员三时
@@ -22,6 +37,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @ControllerAdvice
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class ResultHandler implements ResponseBodyAdvice<Object> {
+
+    @Autowired
+    private RestApiProperties restApiProperties;
+
     /**
      * supports方法: 判断是否要执行beforeBodyWrite方法,
      * true为执行,false不执行.
@@ -51,13 +70,88 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         if (body instanceof Result) {
-            return body;
+            return this.userDefinedResultKey((Result) body);
         } else if (body == null) {
-            return Result.buildSuccess();
+            return this.userDefinedResultKey(Result.buildSuccess());
         } else if (body instanceof String) {
             return body;
         } else {
-            return Result.buildSuccess(body);
+            return this.userDefinedResultKey(Result.buildSuccess(body));
+        }
+    }
+
+
+    /**
+     * 用户配置自定义返回结果
+     *
+     * @return
+     */
+    private Object userDefinedResultKey(Result r) {
+        Map resultMap = new HashMap<>();
+        if (restApiProperties != null && r != null && restApiProperties.isEnabled()) {
+            String keyCode = restApiProperties.getCode();
+            String keyMsg = restApiProperties.getMsg();
+            String keySuccess = restApiProperties.getSuccess();
+            String keyData = restApiProperties.getData();
+            String keyPreviousPage = restApiProperties.getPreviousPage();
+            String keyNextPage = restApiProperties.getNextPage();
+            String keyPageSize = restApiProperties.getPageSize();
+            String keyHasNext = restApiProperties.getHasNext();
+            String keyTotalPageSize = restApiProperties.getTotalPageSize();
+
+            if (StrUtil.isNotEmpty(keySuccess)) {
+                resultMap.put(keySuccess, r.getSuccess());
+            }
+            if (StrUtil.isNotEmpty(keyCode)) {
+                resultMap.put(keyCode, r.getCode());
+            }
+            if (StrUtil.isNotEmpty(keyMsg)) {
+                resultMap.put(keyMsg, r.getMsg());
+            }
+            resultMap.put("timestamp", r.getTimestamp());
+            if (r.getData() != null && r.getData() instanceof ResultPage) {
+                ResultPage resultPage = (ResultPage) r.getData();
+                if (StrUtil.isNotEmpty(keyPreviousPage)) {
+                    resultMap.put(keyPreviousPage, resultPage.getPreviousPage());
+                }
+                if (StrUtil.isNotEmpty(keyNextPage)) {
+                    resultMap.put(keyNextPage, resultPage.getNextPage());
+                }
+                if (StrUtil.isNotEmpty(keyPageSize)) {
+                    resultMap.put(keyPageSize, resultPage.getPageSize());
+                }
+                if (StrUtil.isNotEmpty(keyHasNext)) {
+                    resultMap.put(keyHasNext, resultPage.getHasNext());
+                }
+                if (StrUtil.isNotEmpty(keyTotalPageSize)) {
+                    resultMap.put(keyTotalPageSize, resultPage.getTotalPageSize());
+                }
+                if (StrUtil.isNotEmpty(keyData)) {
+                    resultMap.put(keyData, resultPage.getPageData());
+                }
+            }else {
+                if (StrUtil.isNotEmpty(keyData)) {
+                    resultMap.put(keyData, r.getData());
+                }
+            }
+            return resultMap;
+        } else {
+            if (r.getData() != null && r.getData() instanceof ResultPage) {
+                ResultPage resultPage = (ResultPage) r.getData();
+                resultPage.setCode(r.getCode());
+                resultPage.setMsg(r.getMsg());
+                resultPage.setSuccess(r.getSuccess());
+                resultPage.setTimestamp(r.getTimestamp());
+                resultPage.setData(resultPage.getPageData());
+                resultPage.setPageData(null);
+                Map rPage = BeanUtil.beanToMap(resultPage, false, true);
+                return rPage;
+            } else {
+                return r;
+            }
+
         }
     }
 }
+
+
