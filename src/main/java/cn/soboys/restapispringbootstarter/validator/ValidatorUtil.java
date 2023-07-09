@@ -1,9 +1,10 @@
 package cn.soboys.restapispringbootstarter.validator;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.text.StrFormatter;
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.core.util.StrUtil;
+
+import org.dromara.hutool.core.date.DateUtil;
+import org.dromara.hutool.core.math.NumberUtil;
+import org.dromara.hutool.core.text.StrUtil;
+import org.dromara.hutool.core.text.placeholder.StrFormatter;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;

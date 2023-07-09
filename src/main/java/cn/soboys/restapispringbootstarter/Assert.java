@@ -1,9 +1,13 @@
 package cn.soboys.restapispringbootstarter;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.*;
+
 import cn.soboys.restapispringbootstarter.exception.BusinessException;
+import io.netty.util.internal.ObjectUtil;
+import org.dromara.hutool.core.array.ArrayUtil;
+import org.dromara.hutool.core.collection.CollUtil;
+import org.dromara.hutool.core.map.MapUtil;
+import org.dromara.hutool.core.text.StrUtil;
+import org.dromara.hutool.core.util.ObjUtil;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -1077,7 +1081,7 @@ public class Assert {
      * @throws X obj1 must be not equals obj2
      */
     public static <X extends Throwable> void notEquals(Object obj1, Object obj2, Supplier<X> errorSupplier) throws X {
-        if (ObjectUtil.equals(obj1, obj2)) {
+        if (ObjUtil.equals(obj1, obj2)) {
             throw errorSupplier.get();
         }
     }
@@ -1123,7 +1127,7 @@ public class Assert {
      * @throws X obj1 must be equals obj2
      */
     public static <X extends Throwable> void equals(Object obj1, Object obj2, Supplier<X> errorSupplier) throws X {
-        if (ObjectUtil.notEqual(obj1, obj2)) {
+        if (ObjUtil.notEquals(obj1, obj2)) {
             throw errorSupplier.get();
         }
     }

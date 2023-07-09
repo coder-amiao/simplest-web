@@ -1,7 +1,7 @@
 package cn.soboys.restapispringbootstarter.controller;
 
 
-import cn.hutool.core.bean.BeanUtil;
+
 import cn.soboys.restapispringbootstarter.Result;
 import cn.soboys.restapispringbootstarter.ResultPage;
 import cn.soboys.restapispringbootstarter.domain.EntityParam;
@@ -13,6 +13,7 @@ import cn.soboys.restapispringbootstarter.enums.LogCURDTypeEnum;
 import cn.soboys.restapispringbootstarter.log.Log;
 import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.hutool.core.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,10 @@ import org.springframework.validation.annotation.Validated;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +47,7 @@ public class ApiRestController {
 
 
     @PostMapping("/chat")
-    public Result chatDialogue(@Validated EntityParam s) {
+    public Result chatDialogue(@Validated  EntityParam s) {
         return Result.buildSuccess(s);
     }
 

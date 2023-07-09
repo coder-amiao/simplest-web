@@ -1,26 +1,23 @@
 package cn.soboys.restapispringbootstarter.config;
 
-import cn.hutool.extra.spring.EnableSpringUtil;
+
 import cn.soboys.restapispringbootstarter.ApplicationRunner;
 import cn.soboys.restapispringbootstarter.ExceptionHandler;
 import cn.soboys.restapispringbootstarter.ResultHandler;
 import cn.soboys.restapispringbootstarter.aop.LimitAspect;
 import cn.soboys.restapispringbootstarter.aop.LogAspect;
-import cn.soboys.restapispringbootstarter.cache.SpringCacheConfig;
+
 import cn.soboys.restapispringbootstarter.cache.SpringCacheUtil;
 import cn.soboys.restapispringbootstarter.i18n.I18NMessage;
 
 
 import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
+
+import org.hibernate.validator.HibernateValidator;
 import org.springframework.cache.Cache;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.redis.core.RedisOperations;
+
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -28,6 +25,10 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -90,6 +91,21 @@ public class BeanAutoConfiguration {
     public SpringCacheUtil springCacheUtil() {
         return new SpringCacheUtil();
     }
+
+
+    /**
+     * 参数校验快速失败返回 提升性能
+     */
+    @Bean
+    public Validator validator() {
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+                .configure()
+                // 快速失败模式
+                .failFast(true)
+                .buildValidatorFactory();
+        return validatorFactory.getValidator();
+    }
+
 
     public class RestTemplateConfig {
 

@@ -1,8 +1,8 @@
 package cn.soboys.restapispringbootstarter.utils;
 
-import cn.hutool.http.useragent.UserAgent;
-import cn.hutool.http.useragent.UserAgentUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.hutool.http.useragent.UserAgent;
+import org.dromara.hutool.http.useragent.UserAgentUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

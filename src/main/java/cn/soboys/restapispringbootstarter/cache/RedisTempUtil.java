@@ -1,6 +1,6 @@
 package cn.soboys.restapispringbootstarter.cache;
 
-import cn.hutool.extra.spring.SpringUtil;
+import org.dromara.hutool.extra.spring.SpringUtil;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Configuration;

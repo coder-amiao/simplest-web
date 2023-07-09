@@ -7,7 +7,7 @@ package cn.soboys.restapispringbootstarter.config;
  * @webSite https://github.com/coder-amiao
  */
 
-import cn.hutool.core.util.StrUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

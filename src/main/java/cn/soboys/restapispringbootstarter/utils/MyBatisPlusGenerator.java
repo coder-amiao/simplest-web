@@ -3,7 +3,7 @@ package cn.soboys.restapispringbootstarter.utils;
 import java.util.ArrayList;
 
 
-import cn.hutool.core.util.StrUtil;
+
 import cn.soboys.restapispringbootstarter.config.GenerateCodeConfig;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import org.dromara.hutool.core.text.StrUtil;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

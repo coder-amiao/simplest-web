@@ -1,9 +1,6 @@
 package cn.soboys.restapispringbootstarter.aop;
 
 
-import cn.hutool.core.exceptions.ExceptionUtil;
-import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.soboys.restapispringbootstarter.Result;
 import cn.soboys.restapispringbootstarter.config.RestApiProperties;
 import cn.soboys.restapispringbootstarter.enums.LogTypeEnum;
@@ -19,8 +16,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.dromara.hutool.core.exception.ExceptionUtil;
+import org.dromara.hutool.core.text.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sun.reflect.misc.ReflectUtil;
 
 import java.lang.reflect.Method;
 
@@ -117,8 +117,10 @@ public class LogAspect extends BaseAspectSupport {
             //如果请求对象存在则处理请求头和请求参数
             //HttpServletRequest req = HttpUserAgent.getRequest();
             if (loggingProperties != null && StrUtil.isNotEmpty(loggingProperties.getLogDataSourceClass())) {
-                LogDataSource logDataSource = ReflectUtil.newInstance(loggingProperties.getLogDataSourceClass());
-                logDataSource.save(logBean);
+
+                Class<?> clazz = Class.forName(loggingProperties.getLogDataSourceClass()); // 使用全类名
+                Object instance = clazz.getDeclaredConstructor().newInstance(); // 创建实例
+                ((LogDataSource) instance).save(logBean);
             } else {
                 LogFileDefaultDataSource fileDefaultDataSource = new LogFileDefaultDataSource();
                 fileDefaultDataSource.save(logBean);

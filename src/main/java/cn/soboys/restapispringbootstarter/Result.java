@@ -1,16 +1,16 @@
 package cn.soboys.restapispringbootstarter;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
+
 import cn.soboys.restapispringbootstarter.domain.BaseObj;
 import cn.soboys.restapispringbootstarter.i18n.DefaultMessage;
 import cn.soboys.restapispringbootstarter.i18n.I18NMessage;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.hutool.core.collection.CollUtil;
+import org.dromara.hutool.core.data.id.IdUtil;
+import org.dromara.hutool.core.date.DateUtil;
+import org.dromara.hutool.core.text.StrUtil;
+import org.dromara.hutool.extra.spring.SpringUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -36,7 +36,7 @@ public class Result<T> extends BaseObj{
     public static final String ERROR_CODE = "FAIL";
     public static final String MSG = "操作成功";
     public static final String ERROR_MSG = "操作失败";
-    private static final String TIMESTAMP = DateUtil.now();
+    private static final String TIMESTAMP = DateUtil.formatNow();
 
     private static final String I18N_HEADER = "Lang";
 

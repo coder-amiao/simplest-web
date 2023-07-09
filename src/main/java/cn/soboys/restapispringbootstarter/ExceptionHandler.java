@@ -1,13 +1,16 @@
 package cn.soboys.restapispringbootstarter;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.exceptions.ExceptionUtil;
-import cn.hutool.core.util.StrUtil;
+
 import cn.soboys.restapispringbootstarter.exception.BusinessException;
 import cn.soboys.restapispringbootstarter.exception.CacheException;
 import cn.soboys.restapispringbootstarter.exception.LimitAccessException;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.hutool.core.collection.CollUtil;
+import org.dromara.hutool.core.collection.ListUtil;
+import org.dromara.hutool.core.exception.ExceptionUtil;
+import org.dromara.hutool.core.stream.CollectorUtil;
+import org.dromara.hutool.core.text.StrUtil;
+import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -23,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -78,7 +83,7 @@ public class ExceptionHandler {
         List<String> collect = fieldErrors.stream()
                 .map(o -> o.getField() + o.getDefaultMessage())
                 .collect(Collectors.toList());
-        request.setAttribute("argument_error",CollUtil.join(collect, ";"));
+        request.setAttribute("argument_error", CollUtil.join(collect, ";"));
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
                 StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), CollUtil.join(collect, ";")));
     }
@@ -87,22 +92,16 @@ public class ExceptionHandler {
      * 验证 单个参数类型
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(ConstraintViolationException.class)
-    public Result ConstraintViolationExceptionHandler(ConstraintViolationException e,HttpServletRequest request) {
-        List errorList = CollectionUtil.newArrayList();
+    public Result ConstraintViolationExceptionHandler(ConstraintViolationException e, HttpServletRequest request) {
+        List errorList = new ArrayList<>();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
             StringBuilder message = new StringBuilder();
             Path path = violation.getPropertyPath();
-            String[] pathArr = StrUtil.splitToArray(path.toString(), ".");
-            String msg = "";
-            if (pathArr.length >= 3) {
-                msg = message.append(pathArr[pathArr.length - 1]).append(violation.getMessage()).toString();
-            } else {
-                msg = message.append(pathArr[1]).append(violation.getMessage()).toString();
-            }
+            String msg = message.append(((PathImpl) path).getLeafNode()).append(violation.getMessage()).toString();
             errorList.add(msg);
         }
-        request.setAttribute("argument_error",CollUtil.join(errorList, ";"));
+        request.setAttribute("argument_error", CollUtil.join(errorList, ";"));
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
                 StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), CollUtil.join(errorList, ";")));
     }
@@ -112,15 +111,15 @@ public class ExceptionHandler {
      * 验证  对象类型参数 JSON body 参数
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result jsonParamsException(MethodArgumentNotValidException e,HttpServletRequest request) {
+    public Result jsonParamsException(MethodArgumentNotValidException e, HttpServletRequest request) {
         BindingResult bindingResult = e.getBindingResult();
-        List errorList = CollectionUtil.newArrayList();
+        List errorList = new ArrayList<>();
 
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
             String msg = String.format("%s%s；", fieldError.getField(), fieldError.getDefaultMessage());
             errorList.add(msg);
         }
-        request.setAttribute("argument_error",CollUtil.join(errorList, ";"));
+        request.setAttribute("argument_error", CollUtil.join(errorList, ";"));
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
                 StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), CollUtil.join(errorList, ";")));
     }
@@ -153,7 +152,7 @@ public class ExceptionHandler {
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public Result httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        return Result.buildFailure(HttpStatus.BAD_GATEWAY,ExceptionUtil.stacktraceToString(e));
+        return Result.buildFailure(HttpStatus.BAD_GATEWAY, ExceptionUtil.stacktraceToString(e));
     }
 
     /**
@@ -165,13 +164,13 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
     public Result HttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
-                StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), "JSON参数格式数据类型不对"),ExceptionUtil.stacktraceToString(e));
+                StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), "JSON参数格式数据类型不对"), ExceptionUtil.stacktraceToString(e));
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(LimitAccessException.class)
     public Result LimitAccessExceptionException(LimitAccessException e) {
         return Result.buildFailure(HttpStatus.REQUEST_TIMEOUT.getCode(),
-                StrUtil.format(HttpStatus.REQUEST_TIMEOUT.getMessage() + "{}", e.getMessage()),ExceptionUtil.stacktraceToString(e));
+                StrUtil.format(HttpStatus.REQUEST_TIMEOUT.getMessage() + "{}", e.getMessage()), ExceptionUtil.stacktraceToString(e));
     }
 
 
@@ -184,6 +183,6 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(CacheException.class)
     public Result CacheException(CacheException e) {
         return Result.buildFailure(HttpStatus.CACHE_EXCEPTION.getCode(),
-                StrUtil.format(HttpStatus.CACHE_EXCEPTION.getMessage() + "{}", e.getMessage()),ExceptionUtil.stacktraceToString(e));
+                StrUtil.format(HttpStatus.CACHE_EXCEPTION.getMessage() + "{}", e.getMessage()), ExceptionUtil.stacktraceToString(e));
     }
 }
