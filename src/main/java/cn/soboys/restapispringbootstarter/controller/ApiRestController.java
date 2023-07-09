@@ -1,9 +1,9 @@
 package cn.soboys.restapispringbootstarter.controller;
 
 
-
 import cn.soboys.restapispringbootstarter.Result;
 import cn.soboys.restapispringbootstarter.ResultPage;
+import cn.soboys.restapispringbootstarter.cache.CacheTmp;
 import cn.soboys.restapispringbootstarter.domain.EntityParam;
 
 import cn.soboys.restapispringbootstarter.cache.CacheKey;
@@ -47,16 +47,16 @@ public class ApiRestController {
 
 
     @PostMapping("/chat")
-    public Result chatDialogue(@Validated  EntityParam s) {
+    public Result chatDialogue(@Validated EntityParam s) {
         return Result.buildSuccess(s);
     }
 
 
     @PostMapping("/page")
-    @Log(value = "查询用户数据",apiType= LogApiTypeEnum.USER,CURDType= LogCURDTypeEnum.RETRIEVE)
+    @Log(value = "查询用户数据", apiType = LogApiTypeEnum.USER, CURDType = LogCURDTypeEnum.RETRIEVE)
     public Result page(@Validated EntityParam s) {
-        ResultPage<List<EntityParam>> resultPage=new ResultPage<>();
-        List a=new ArrayList();
+        ResultPage<List<EntityParam>> resultPage = new ResultPage<>();
+        List a = new ArrayList();
         a.add(s);
         resultPage.setPageData(a);
         return ResultPage.buildSuccess(resultPage);
@@ -99,7 +99,6 @@ public class ApiRestController {
     @GetMapping("/redis/unifyCache")
     public Result unifyCacheKey() {
         CacheKey.PWD_RESET_CODE.valueSetAndExpire("test", 60l, TimeUnit.SECONDS, "judy");
-        CacheKey.PWD_RESET_CODE.valueSetAndExpire("test——", 60l, TimeUnit.SECONDS, "billy");
         return Result.buildSuccess();
     }
 
@@ -115,5 +114,16 @@ public class ApiRestController {
     public Result springCache() {
         String a = "test cache";
         return Result.buildSuccess(a);
+    }
+
+    @GetMapping("/redis")
+    public Result redis() {
+        redisTempUtil.set("bally", "123");
+        return Result.buildSuccess();
+    }
+
+    @GetMapping("/redisGet")
+    public Result redisGet() {
+        return Result.buildSuccess(redisTempUtil.get("bally"));
     }
 }

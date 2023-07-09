@@ -52,3 +52,5 @@ rest-api:
       not_found:
         en: Not Found
         cn: 请求资源不存在
+  redis:
+    key-prefix: kenx

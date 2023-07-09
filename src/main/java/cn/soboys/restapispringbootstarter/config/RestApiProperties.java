@@ -61,6 +61,20 @@ public class RestApiProperties {
         private String maxFileSize;
         private String maxTotalSizeCap;
         private String levelRoot;
-        private String logDataSourceClass="cn.soboys.restapispringbootstarter.log.LogFileDefaultDataSource";
+        private String logDataSourceClass = "cn.soboys.restapispringbootstarter.log.LogFileDefaultDataSource";
+    }
+
+    @Configuration
+    @ConfigurationProperties(prefix = "rest-api.redis")
+    @Data
+    public class RedisProperties {
+        /**
+         *  全局注册key
+         */
+        private String keyPrefix;
+        /**
+         * redis 缓存的默认超时时间(s) 1天超时
+         */
+        private Long expireTime;
     }
 }
