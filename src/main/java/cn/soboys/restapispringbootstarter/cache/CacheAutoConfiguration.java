@@ -5,15 +5,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dromara.hutool.core.text.StrUtil;
-import org.dromara.hutool.extra.spring.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,18 +17,14 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import javax.annotation.Resource;
-import java.time.Duration;
-
 /**
  * @author 公众号 程序员三时
  * @version 1.0
- * @date 2023/7/7 09:51
+ * @date 2023/7/10 00:50
  * @webSite https://github.com/coder-amiao
  */
-@Configuration
-public class RedisConfig {
-
+@EnableConfigurationProperties(value = {RestApiProperties.RedisProperties.class})
+public class CacheAutoConfiguration {
 
     @Autowired
     private RestApiProperties.RedisProperties redisProperties;
@@ -60,8 +51,8 @@ public class RedisConfig {
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         // key采用 String的序列化方式 如果有前缀的时候。加入全局前缀
         if(redisProperties!=null&& StrUtil.isNotEmpty(redisProperties.getKeyPrefix())){
-            template.setKeySerializer(new PrefixStringRedisSerializer(redisProperties.getKeyPrefix()+":", stringRedisSerializer));
-            template.setHashKeySerializer(new PrefixStringRedisSerializer(redisProperties.getKeyPrefix()+":", stringRedisSerializer));
+            template.setKeySerializer(new CacheAutoConfiguration.PrefixStringRedisSerializer(redisProperties.getKeyPrefix()+":", stringRedisSerializer));
+            template.setHashKeySerializer(new CacheAutoConfiguration.PrefixStringRedisSerializer(redisProperties.getKeyPrefix()+":", stringRedisSerializer));
         }else {
             template.setKeySerializer(stringRedisSerializer);
             // hash的 key也采用 String的序列化方式
@@ -100,6 +91,4 @@ public class RedisConfig {
             return key;
         }
     }
-
-
 }
