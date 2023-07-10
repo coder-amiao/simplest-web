@@ -14,6 +14,9 @@ import cn.soboys.restapispringbootstarter.i18n.I18NMessage;
 import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
 
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.cache.Cache;
 import org.springframework.context.annotation.Bean;
@@ -105,7 +108,6 @@ public class BeanAutoConfiguration {
                 .buildValidatorFactory();
         return validatorFactory.getValidator();
     }
-
 
     public class RestTemplateConfig {
 

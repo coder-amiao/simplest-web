@@ -2,6 +2,7 @@ rest-api:
   enabled: false
   msg: msg
   code: code
+  code-success-value: OK
   success: success
   previousPage: previousPage
   nextPage: nextPage
@@ -54,3 +55,16 @@ rest-api:
         cn: 请求资源不存在
   redis:
     key-prefix: kenx
+  include-packages: cn.soboys.restapispringbootstarter.controller
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    # 是否开启接口文档
+    enabled: true
+  group-configs:
+    - { group: 'rest', packages-to-scan: 'cn.soboys.restapispringbootstarter.controller' }
+
+
+

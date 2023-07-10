@@ -1,6 +1,7 @@
 package cn.soboys.restapispringbootstarter.controller;
 
 
+
 import cn.soboys.restapispringbootstarter.Result;
 import cn.soboys.restapispringbootstarter.ResultPage;
 import cn.soboys.restapispringbootstarter.cache.CacheTmp;
@@ -14,6 +15,7 @@ import cn.soboys.restapispringbootstarter.log.Log;
 import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.hutool.core.bean.BeanUtil;
+import org.dromara.hutool.core.map.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -125,5 +128,13 @@ public class ApiRestController {
     @GetMapping("/redisGet")
     public Result redisGet() {
         return Result.buildSuccess(redisTempUtil.get("bally"));
+    }
+
+    @GetMapping("/defind")
+    public Map defind() {
+        Map m= MapUtil.newHashMap();
+        m.put("name","judy");
+        m.put("age",19);
+        return m;
     }
 }

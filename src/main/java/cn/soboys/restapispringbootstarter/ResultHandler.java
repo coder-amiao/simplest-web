@@ -1,12 +1,11 @@
 package cn.soboys.restapispringbootstarter;
 
-
 import cn.soboys.restapispringbootstarter.annotation.NoRestFulApi;
 import cn.soboys.restapispringbootstarter.config.RestApiProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.hutool.core.array.ArrayUtil;
 import org.dromara.hutool.core.bean.BeanUtil;
 import org.dromara.hutool.core.text.StrUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.core.MethodParameter;
@@ -14,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -46,7 +44,8 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
      */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return !returnType.hasMethodAnnotation(NoRestFulApi.class);
+
+        return this.userDefineWrapResult(returnType);
     }
 
     /**
@@ -97,13 +96,17 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
                 resultMap.put(keySuccess, r.getSuccess());
             }
             if (StrUtil.isNotEmpty(keyCode)) {
-                resultMap.put(keyCode, r.getCode());
+                if (StrUtil.isNotEmpty(restApiProperties.getCodeSuccessValue()) && r.getCode().equals("OK")) {
+                    resultMap.put(keyCode, restApiProperties.getCodeSuccessValue());
+                } else {
+                    resultMap.put(keyCode, r.getCode());
+                }
             }
             if (StrUtil.isNotEmpty(keyMsg)) {
                 resultMap.put(keyMsg, r.getMsg());
             }
             resultMap.put("timestamp", r.getTimestamp());
-            resultMap.put("requestId",r.getRequestId());
+            resultMap.put("requestId", r.getRequestId());
             if (r.getData() != null && r.getData() instanceof ResultPage) {
                 ResultPage resultPage = (ResultPage) r.getData();
                 if (StrUtil.isNotEmpty(keyPreviousPage)) {
@@ -124,7 +127,7 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
                 if (StrUtil.isNotEmpty(keyData)) {
                     resultMap.put(keyData, resultPage.getPageData());
                 }
-            }else {
+            } else {
                 if (StrUtil.isNotEmpty(keyData)) {
                     resultMap.put(keyData, r.getData());
                 }
@@ -146,6 +149,51 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
             }
 
         }
+    }
+
+
+    /**
+     * 用户自定义需要包装类
+     *
+     * @param returnType
+     * @return
+     */
+    private Boolean userDefineWrapResult(MethodParameter returnType) {
+        Boolean flag = !returnType.hasMethodAnnotation(NoRestFulApi.class);
+        String cls = returnType.getContainingClass().getTypeName();
+
+
+        /**
+         * 只添加用户需要包装的
+         */
+        if (ArrayUtil.isNotEmpty(restApiProperties.getIncludePackages())) {
+            for (String cla : restApiProperties.getIncludePackages()
+            ) {
+                if (cls.contains(cla)) {
+                    flag = true;
+                } else {
+                    flag = false;
+                }
+                break;
+            }
+        }
+
+        /**
+         * 过滤掉用户自定义不需要包装的类
+         */
+        if (ArrayUtil.isNotEmpty(restApiProperties.getExcludePackages())) {
+            for (String cla : restApiProperties.getExcludePackages()
+            ) {
+                if (cls.contains(cla)) {
+                    flag = false;
+                } else {
+                    flag = true;
+                }
+                break;
+            }
+        }
+
+        return flag;
     }
 }
 

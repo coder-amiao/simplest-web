@@ -45,6 +45,11 @@ public class LogEntry {
     private String requestIp;
 
     /**
+     * 请求接口地址
+     */
+    private String path;
+
+    /**
      * ip地址所对应的物理地址
      */
     private String address;
@@ -95,6 +100,7 @@ public class LogEntry {
     private String requestId;
 
     public LogEntry() {
+
     }
 
     public LogEntry(String logType, Long time) {

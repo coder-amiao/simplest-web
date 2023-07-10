@@ -20,8 +20,11 @@ import org.dromara.hutool.core.exception.ExceptionUtil;
 import org.dromara.hutool.core.text.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
@@ -59,6 +62,11 @@ public class LogAspect extends BaseAspectSupport {
         currentTime = System.currentTimeMillis();
         Object result = joinPoint.proceed();
         LogEntry logBean = analyResult(result);
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        if (result != null) {
+            logBean.setPath(request.getRequestURI());
+        }
         saveLog(joinPoint, logBean);
         return result;
     }
