@@ -129,17 +129,17 @@ public class RestApiProperties {
         /**
          * 标题
          **/
-        private String title = "";
+        private String title = "REST FULL";
 
         /**
          * 描述
          **/
-        private String description = "";
+        private String description = "SpringBoot Web Easy RestFull API";
 
         /**
          * 版本
          **/
-        private String version = "";
+        private String version = "1.5.0";
 
         /**
          * 许可证
@@ -159,7 +159,7 @@ public class RestApiProperties {
         /**
          * host信息
          **/
-        private String host = "";
+        private String host = "https://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/";
 
         /**
          * 联系人信息
@@ -173,7 +173,7 @@ public class RestApiProperties {
         /**
          * 联系人
          **/
-        private String name = "程序员三时";
+        private String name = "公众号程序员三时";
 
         /**
          * 联系人url

@@ -159,7 +159,13 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
      * @return
      */
     private Boolean userDefineWrapResult(MethodParameter returnType) {
+
+        /**
+         * 注解优先级别最高
+         */
         Boolean flag = !returnType.hasMethodAnnotation(NoRestFulApi.class);
+        if(!flag) return flag;
+
         String cls = returnType.getContainingClass().getTypeName();
 
 
