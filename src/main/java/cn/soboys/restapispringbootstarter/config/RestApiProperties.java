@@ -57,6 +57,13 @@ public class RestApiProperties {
     private String hasNext = "hasNext";
 
     /**
+     * 是否包装分页结果到data
+     */
+    private Boolean pageWrap=Boolean.TRUE;
+
+    private String pageData="pageData";
+
+    /**
      * 排除不需要统一返回的restFull
      */
     private String[] excludePackages;

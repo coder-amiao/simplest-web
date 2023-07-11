@@ -1,5 +1,6 @@
 package cn.soboys.restapispringbootstarter;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
+@JsonPropertyOrder({"success", "code","msg","requestId","timestamp","previousPage","nextPage","pageSize","totalPageSize","hasNext","data","pageData"})
 public class ResultPage<T>  extends Result {
     /**
      * 当前页

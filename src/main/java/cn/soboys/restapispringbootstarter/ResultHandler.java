@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.hutool.core.array.ArrayUtil;
 import org.dromara.hutool.core.bean.BeanUtil;
 import org.dromara.hutool.core.text.StrUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.core.MethodParameter;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -80,7 +82,7 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
      * @return
      */
     private Object userDefinedResultKey(Result r) {
-        Map resultMap = new HashMap<>();
+        Map resultMap = new LinkedHashMap();
         if (restApiProperties != null && r != null && restApiProperties.isEnabled()) {
             String keyCode = restApiProperties.getCode();
             String keyMsg = restApiProperties.getMsg();
@@ -91,12 +93,15 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
             String keyPageSize = restApiProperties.getPageSize();
             String keyHasNext = restApiProperties.getHasNext();
             String keyTotalPageSize = restApiProperties.getTotalPageSize();
+            String keyPageData = restApiProperties.getPageData();
+            String codeSuccessValue = restApiProperties.getCodeSuccessValue();
+
 
             if (StrUtil.isNotEmpty(keySuccess)) {
                 resultMap.put(keySuccess, r.getSuccess());
             }
             if (StrUtil.isNotEmpty(keyCode)) {
-                if (StrUtil.isNotEmpty(restApiProperties.getCodeSuccessValue()) && r.getCode().equals("OK")) {
+                if (StrUtil.isNotEmpty(codeSuccessValue) && r.getCode().equals("OK")) {
                     resultMap.put(keyCode, restApiProperties.getCodeSuccessValue());
                 } else {
                     resultMap.put(keyCode, r.getCode());
@@ -105,27 +110,57 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
             if (StrUtil.isNotEmpty(keyMsg)) {
                 resultMap.put(keyMsg, r.getMsg());
             }
-            resultMap.put("timestamp", r.getTimestamp());
             resultMap.put("requestId", r.getRequestId());
+            resultMap.put("timestamp", r.getTimestamp());
             if (r.getData() != null && r.getData() instanceof ResultPage) {
                 ResultPage resultPage = (ResultPage) r.getData();
-                if (StrUtil.isNotEmpty(keyPreviousPage)) {
-                    resultMap.put(keyPreviousPage, resultPage.getPreviousPage());
-                }
-                if (StrUtil.isNotEmpty(keyNextPage)) {
-                    resultMap.put(keyNextPage, resultPage.getNextPage());
-                }
-                if (StrUtil.isNotEmpty(keyPageSize)) {
-                    resultMap.put(keyPageSize, resultPage.getPageSize());
-                }
-                if (StrUtil.isNotEmpty(keyHasNext)) {
-                    resultMap.put(keyHasNext, resultPage.getHasNext());
-                }
-                if (StrUtil.isNotEmpty(keyTotalPageSize)) {
-                    resultMap.put(keyTotalPageSize, resultPage.getTotalPageSize());
-                }
-                if (StrUtil.isNotEmpty(keyData)) {
-                    resultMap.put(keyData, resultPage.getPageData());
+
+                /**
+                 * 分页结果包装到data
+                 */
+                if (restApiProperties.getPageWrap()) {
+                    Map dataMap = new LinkedHashMap();
+                    if (StrUtil.isNotEmpty(keyPreviousPage)) {
+                        dataMap.put(keyPreviousPage, resultPage.getPreviousPage());
+                    }
+                    if (StrUtil.isNotEmpty(keyNextPage)) {
+                        dataMap.put(keyNextPage, resultPage.getNextPage());
+                    }
+                    if (StrUtil.isNotEmpty(keyPageSize)) {
+                        dataMap.put(keyPageSize, resultPage.getPageSize());
+                    }
+                    if (StrUtil.isNotEmpty(keyHasNext)) {
+                        dataMap.put(keyHasNext, resultPage.getHasNext());
+                    }
+                    if (StrUtil.isNotEmpty(keyTotalPageSize)) {
+                        dataMap.put(keyTotalPageSize, resultPage.getTotalPageSize());
+                    }
+
+                    if (StrUtil.isNotEmpty(keyPageData)) {
+                        dataMap.put(keyPageData, resultPage.getPageData());
+                    }
+                    resultMap.put(keyData, dataMap);
+                    return resultMap;
+
+                } else {
+                    if (StrUtil.isNotEmpty(keyPreviousPage)) {
+                        resultMap.put(keyPreviousPage, resultPage.getPreviousPage());
+                    }
+                    if (StrUtil.isNotEmpty(keyNextPage)) {
+                        resultMap.put(keyNextPage, resultPage.getNextPage());
+                    }
+                    if (StrUtil.isNotEmpty(keyPageSize)) {
+                        resultMap.put(keyPageSize, resultPage.getPageSize());
+                    }
+                    if (StrUtil.isNotEmpty(keyHasNext)) {
+                        resultMap.put(keyHasNext, resultPage.getHasNext());
+                    }
+                    if (StrUtil.isNotEmpty(keyTotalPageSize)) {
+                        resultMap.put(keyTotalPageSize, resultPage.getTotalPageSize());
+                    }
+                    if (StrUtil.isNotEmpty(keyData)) {
+                        resultMap.put(keyData, resultPage.getPageData());
+                    }
                 }
             } else {
                 if (StrUtil.isNotEmpty(keyData)) {
@@ -135,6 +170,17 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
             return resultMap;
         } else {
             if (r.getData() != null && r.getData() instanceof ResultPage) {
+                /**
+                 * 分页结果包装到`data
+                 */
+                if (restApiProperties.getPageWrap()) {
+                    Map dataMap = BeanUtil.beanToMap(r.getData(), false, true);
+                    dataMap.remove("requestId");
+                    dataMap.remove("timestamp");
+                    r.setData(dataMap);
+                    return r;
+                }
+
                 ResultPage resultPage = (ResultPage) r.getData();
                 resultPage.setCode(r.getCode());
                 resultPage.setMsg(r.getMsg());
@@ -164,7 +210,7 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
          * 注解优先级别最高
          */
         Boolean flag = !returnType.hasMethodAnnotation(NoRestFulApi.class);
-        if(!flag) return flag;
+        if (!flag) return flag;
 
         String cls = returnType.getContainingClass().getTypeName();
 

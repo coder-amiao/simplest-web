@@ -1,4 +1,5 @@
 rest-api:
+  pageWrap: true
   enabled: false
   msg: msg
   code: code
@@ -9,7 +10,8 @@ rest-api:
   pageSize: pageSize
   hasNext: hasNext
   totalPageSize: totalPageSize
-  data: info
+  data: data
+  pageData: pageData
   logging:
     path: ./logs   #日志存储路径（服务器上绝对）
     max-history: 90 # 保存多少天

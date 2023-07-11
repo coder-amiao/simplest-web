@@ -4,6 +4,7 @@ package cn.soboys.restapispringbootstarter;
 import cn.soboys.restapispringbootstarter.domain.BaseObj;
 import cn.soboys.restapispringbootstarter.i18n.DefaultMessage;
 import cn.soboys.restapispringbootstarter.i18n.I18NMessage;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.hutool.core.collection.CollUtil;
@@ -30,6 +31,8 @@ import java.util.stream.Stream;
  */
 @Data
 @Slf4j
+//设置属性返回顺序
+@JsonPropertyOrder({"success", "code","msg","requestId","timestamp","data"})
 public class Result<T> extends BaseObj{
 
     public static final String SUCCESS_CODE = "OK";
@@ -56,6 +59,7 @@ public class Result<T> extends BaseObj{
     private String requestId= IdUtil.nanoId(20);
 
     private String timestamp = TIMESTAMP;
+
 
     private T data;
 
