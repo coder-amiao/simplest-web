@@ -4,6 +4,7 @@ package cn.soboys.restapispringbootstarter.controller;
 
 import cn.soboys.restapispringbootstarter.Result;
 import cn.soboys.restapispringbootstarter.ResultPage;
+import cn.soboys.restapispringbootstarter.annotation.Limit;
 import cn.soboys.restapispringbootstarter.cache.CacheTmp;
 import cn.soboys.restapispringbootstarter.domain.EntityParam;
 
@@ -49,9 +50,11 @@ public class ApiRestController {
     private RestFulTemp restFulTemp;
 
 
-    @PostMapping("/chat")
-    public Result chatDialogue(@Validated EntityParam s) {
-        return Result.buildSuccess(s);
+    @GetMapping("/chat")
+    @Log("日志记录测试")
+    @Limit(key = "chat",name="接口限流",period=10,count=60)
+    public Result chatDialogue() {
+        return Result.buildSuccess("接口限流测试");
     }
 
 

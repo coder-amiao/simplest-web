@@ -8,6 +8,8 @@ import cn.soboys.restapispringbootstarter.log.Log;
 import cn.soboys.restapispringbootstarter.log.LogDataSource;
 import cn.soboys.restapispringbootstarter.log.LogEntry;
 import cn.soboys.restapispringbootstarter.log.LogFileDefaultDataSource;
+import cn.soboys.restapispringbootstarter.utils.HttpUserAgent;
+import cn.soboys.restapispringbootstarter.utils.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -18,6 +20,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.dromara.hutool.core.exception.ExceptionUtil;
 import org.dromara.hutool.core.text.StrUtil;
+import org.dromara.hutool.json.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -123,7 +126,23 @@ public class LogAspect extends BaseAspectSupport {
             //方法全路径
             logBean.setMethod(joinPoint.getTarget().getClass().getName() + "." + methodName + "()");
             //如果请求对象存在则处理请求头和请求参数
-            //HttpServletRequest req = HttpUserAgent.getRequest();
+            HttpServletRequest req = HttpUserAgent.getRequest();
+
+            String ip = HttpUserAgent.getIpAddr();
+            logBean.setRequestIp(ip);
+            if(logAnnotation.ipCity()){
+                logBean.setAddress(HttpUserAgent.getIpToCityInfo(ip));
+            }
+            logBean.setOs(HttpUserAgent.getDeviceSystem());
+            logBean.setBrowser(HttpUserAgent.getDeviceBrowser());
+            logBean.setDevice(HttpUserAgent.getDevice());
+
+            /**
+             * 从切面拿参数有可能因为参数名和实体对象命一致 json序列化时出现jpa循环加载 所以从request获取
+             */
+            JSON params = RequestUtil.getRequestParams(req);
+            logBean.setParams(params == null ? null : params);
+
             if (loggingProperties != null && StrUtil.isNotEmpty(loggingProperties.getLogDataSourceClass())) {
 
                 Class<?> clazz = Class.forName(loggingProperties.getLogDataSourceClass()); // 使用全类名

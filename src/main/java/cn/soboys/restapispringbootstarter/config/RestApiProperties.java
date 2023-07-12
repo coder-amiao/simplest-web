@@ -74,6 +74,22 @@ public class RestApiProperties {
 
 
     @Configuration
+    @ConfigurationProperties(prefix = "rest-api.ip2region")
+    @Data
+    public class Ip2regionProperties{
+        /**
+         * 是否使用外部的IP数据文件.
+         */
+        private boolean external = false;
+        /**
+         * ip2region.db 文件路径，默认： classpath:ip2region/ip2region.db
+         */
+        private String location = "classpath:ip2region/ip2region.xdb";
+
+    }
+
+
+    @Configuration
     @ConfigurationProperties(prefix = "rest-api.logging")
     @Data
     public class LoggingProperties {

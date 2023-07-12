@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author 公众号 程序员三时
@@ -32,7 +33,7 @@ public class LogEntry {
     /**
      * 请求参数
      */
-    private String params;
+    private Object params;
 
     /**
      * 日志类型 INFO ERROR
@@ -98,6 +99,11 @@ public class LogEntry {
      * 请求唯一id
      */
     private String requestId;
+
+    /**
+     * 完整请求设备信息
+     */
+    private String device;
 
     public LogEntry() {
 

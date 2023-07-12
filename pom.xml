@@ -30,6 +30,7 @@
         <!--版本依赖管理-->
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <knife4j-springdoc-ui.version>3.0.3</knife4j-springdoc-ui.version>
+        <ip2region.version>2.7.0</ip2region.version>
     </properties>
 
 
@@ -106,6 +107,11 @@
             <version>6.0.0-M4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>${ip2region.version}</version>
+        </dependency>
 
         <!--Apache 工具包-->
         <dependency>

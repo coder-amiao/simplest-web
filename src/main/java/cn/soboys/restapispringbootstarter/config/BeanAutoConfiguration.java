@@ -91,6 +91,11 @@ public class BeanAutoConfiguration {
     }
 
     @Bean
+    public LimitAspect limitAspect() {
+        return new LimitAspect();
+    }
+
+    @Bean
     public SpringCacheUtil springCacheUtil() {
         return new SpringCacheUtil();
     }

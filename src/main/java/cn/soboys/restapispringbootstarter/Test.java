@@ -1,5 +1,6 @@
 package cn.soboys.restapispringbootstarter;
 
+import cn.soboys.restapispringbootstarter.utils.HttpUserAgent;
 import org.dromara.hutool.core.text.StrUtil;
 
 /**
@@ -10,7 +11,8 @@ import org.dromara.hutool.core.text.StrUtil;
  */
 public class Test {
     public static void main(String[] args) {
-        String path="a.b.c";
-        System.out.println( StrUtil.wrapAllWithPairIfMissing(path.toString(),"."));
+        String ipCity=HttpUserAgent.getIpToCityInfo("1.2.3.4");
+        System.out.printf(ipCity);
+
     }
 }

@@ -58,7 +58,9 @@ rest-api:
   redis:
     key-prefix: kenx
   include-packages: cn.soboys.restapispringbootstarter.controller
-
+  ip2region:
+    external: false
+    location: ip2region/ip2region.xdb
 springdoc:
   swagger-ui:
     enabled: true

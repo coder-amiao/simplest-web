@@ -26,4 +26,10 @@ public @interface Log {
 	LogApiTypeEnum apiType() default LogApiTypeEnum.USER;
 
 	LogCURDTypeEnum CURDType() default LogCURDTypeEnum.RETRIEVE;
+
+	/**
+	 * 记录ip对应城市
+	 * @return
+	 */
+	boolean ipCity()  default true;
 }
