@@ -81,6 +81,11 @@ public class BeanAutoConfiguration {
     }
 
     @Bean
+    public RestApiProperties.Ip2regionProperties ip2regionProperties(RestApiProperties restApiProperties){
+        return restApiProperties.new Ip2regionProperties();
+    }
+
+    @Bean
     public ApplicationRunner applicationRunner() {
         return new ApplicationRunner();
     }

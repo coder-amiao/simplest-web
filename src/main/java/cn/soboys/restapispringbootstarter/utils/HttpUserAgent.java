@@ -4,19 +4,23 @@ import cn.soboys.restapispringbootstarter.config.RestApiProperties;
 import lombok.extern.slf4j.Slf4j;
 
 import org.dromara.hutool.core.exception.ExceptionUtil;
+import org.dromara.hutool.core.io.file.FileUtil;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 import org.dromara.hutool.extra.spring.SpringUtil;
 import org.dromara.hutool.http.useragent.UserAgent;
 import org.dromara.hutool.http.useragent.UserAgentUtil;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Objects;
 
@@ -27,12 +31,12 @@ import java.util.Objects;
  * @webSite https://github.com/coder-amiao
  */
 @Slf4j
-
 public class HttpUserAgent {
     private static final String UNKNOWN = "unknown";
 
 
     private static RestApiProperties.Ip2regionProperties ip2regionProperties = SpringUtil.getBean(RestApiProperties.Ip2regionProperties.class);
+
 
     /**
      * @return HttpServletRequest
@@ -106,16 +110,40 @@ public class HttpUserAgent {
      */
     public static String getIpToCityInfo(String ip) {
         try {
-            String dbPath = "/ip2region/ip2region.xdb";
 
-            if (ip2regionProperties.isExternal()) {
-                ClassPathResource resource = new ClassPathResource(ip2regionProperties.getLocation());
-                dbPath = resource.getFile().getAbsolutePath();
+            ResourceLoader resourceLoader = new DefaultResourceLoader();
+            Resource resource = resourceLoader.getResource(ip2regionProperties.getLocation());
+            String dbPath = "";
+            if (resource.getURI().getScheme().equals("jar")) {
+
+                File file=new File("src/main/resources/"+((ClassPathResource) resource).getPath());
+                FileUtil.writeFromStream(resource.getInputStream(),file);
+                dbPath=file.getAbsolutePath();
             } else {
-                // 获取当前默认记录地址位置的文件
-                ClassPathResource resource = new ClassPathResource(dbPath);
-                dbPath = resource.getFile().getAbsolutePath();
+                dbPath = resource.getFile().getPath();
             }
+
+//            if (ip2regionProperties.isExternal()) {
+//                ClassPathResource resource = new ClassPathResource(ip2regionProperties.getLocation());
+//                dbPath = resource.getFile().getAbsolutePath();
+//            } else {
+//                // 获取当前默认记录地址位置的文件
+//                ResourceLoader resourceLoader = new DefaultResourceLoader();
+//                Resource resource = resourceLoader.getResource("classpath:resource.txt");
+//
+//
+//                URL u =null; //HttpUserAgent.class.getClass().getResource(dbPath);
+//
+//                dbPath= HttpUserAgent.class.getClassLoader().getResource("ip2region/ip2region.xdb").getPath();
+////                if(u==null||u.getPath().contains("file")){
+////                    dbPath =    System.getProperty("user.dir") + "/ip.db";
+////                    HttpUserAgent.class.getClassLoader().getResource("ip2region/ip2region.xdb").getPath();
+////                    File file=new File(dbPath);
+////                    FileUtil.writeFromStream(HttpUserAgent.class.getClassLoader().getResourceAsStream("ip2region/ip2region.xdb"),file);
+////                }else {
+////                    dbPath=u.getPath();
+////                }
+//            }
 
             File file = new File(dbPath);
             //如果当前文件不存在，则从缓存中复制一份
@@ -124,7 +152,6 @@ public class HttpUserAgent {
                 return "UNKNOWN";
             }
             //创建查询对象
-
             Searcher searcher = Searcher.newWithFileOnly(dbPath);
             //开始查询
             return searcher.search(ip);
