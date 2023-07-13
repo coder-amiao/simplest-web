@@ -1,6 +1,7 @@
 package cn.soboys.restapispringbootstarter.aop;
 
 import cn.soboys.restapispringbootstarter.annotation.Limit;
+import cn.soboys.restapispringbootstarter.config.RestApiProperties;
 import cn.soboys.restapispringbootstarter.enums.LimitType;
 import cn.soboys.restapispringbootstarter.exception.LimitAccessException;
 import cn.soboys.restapispringbootstarter.utils.HttpUserAgent;
@@ -13,6 +14,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -36,6 +38,9 @@ import java.lang.reflect.Method;
 public class LimitAspect  extends BaseAspectSupport{
     @Resource
     private  RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RestApiProperties.RedisProperties redisProperties;
 
     public LimitAspect() {
     }
@@ -63,6 +68,9 @@ public class LimitAspect  extends BaseAspectSupport{
                 break;
             default:
                 key = StringUtils.upperCase(method.getName());
+        }
+        if(redisProperties!=null&&StringUtils.isNotBlank(redisProperties.getKeyPrefix())){
+            key=redisProperties.getKeyPrefix()+Strings.COLON+key;
         }
         ImmutableList<String> keys = ImmutableList.of(StringUtils.join(limitAnnotation.prefix() + Strings.UNDER_LINE, key, ip));
         String luaScript = buildLuaScript();

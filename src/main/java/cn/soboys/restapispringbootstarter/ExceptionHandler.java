@@ -162,15 +162,17 @@ public class ExceptionHandler {
      * @return
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
-    public Result HttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public Result HttpMessageNotReadableException(HttpMessageNotReadableException e,HttpServletRequest request) {
+        request.setAttribute("argument_error", e.getMessage());
         return Result.buildFailure(HttpStatus.INVALID_ARGUMENT.getCode(),
-                StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(), "JSON参数格式数据类型不对"), ExceptionUtil.stacktraceToString(e));
+                StrUtil.format(HttpStatus.INVALID_ARGUMENT.getMessage(),e.getMessage()), ExceptionUtil.stacktraceToString(e));
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(LimitAccessException.class)
-    public Result LimitAccessExceptionException(LimitAccessException e) {
+    public Result LimitAccessExceptionException(LimitAccessException e,HttpServletRequest request) {
+        request.setAttribute("argument_error", e.getMessage());
         return Result.buildFailure(HttpStatus.REQUEST_TIMEOUT.getCode(),
-                StrUtil.format(HttpStatus.REQUEST_TIMEOUT.getMessage() + "{}", e.getMessage()), ExceptionUtil.stacktraceToString(e));
+                StrUtil.format(HttpStatus.REQUEST_TIMEOUT.getMessage() , e.getMessage()),ExceptionUtil.stacktraceToString(e));
     }
 
 
@@ -181,8 +183,9 @@ public class ExceptionHandler {
      * @return
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(CacheException.class)
-    public Result CacheException(CacheException e) {
+    public Result CacheException(CacheException e,HttpServletRequest request) {
+        request.setAttribute("argument_error", e.getMessage());
         return Result.buildFailure(HttpStatus.CACHE_EXCEPTION.getCode(),
-                StrUtil.format(HttpStatus.CACHE_EXCEPTION.getMessage() + "{}", e.getMessage()), ExceptionUtil.stacktraceToString(e));
+                StrUtil.format(HttpStatus.CACHE_EXCEPTION.getMessage() , e.getMessage()), ExceptionUtil.stacktraceToString(e));
     }
 }

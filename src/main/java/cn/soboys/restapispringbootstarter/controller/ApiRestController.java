@@ -52,7 +52,7 @@ public class ApiRestController {
 
     @GetMapping("/chat")
     @Log("日志记录测试")
-    @Limit(key = "chat",name="接口限流",period=10,count=60)
+    @Limit(key = "chat",name="接口限流",period=10,count=3)
     public Result chatDialogue() {
         return Result.buildSuccess("接口限流测试");
     }

@@ -2,23 +2,23 @@ i18n:
   message:
     # admin
     internal_server_error:
-      en: Internal Server Error
-      cn: 系统错误
+      en: Internal Server Error {}
+      cn: 系统错误 {}
     bad_gateway:
-      en: Bad Gateway
-      cn: 错误的请求
+      en: Bad Gateway {}
+      cn: 错误的请求 {}
     unauthorized:
-      en: Unauthorized
-      cn: 未授权
+      en: Unauthorized {}
+      cn: 未授权 {}
     forbidden:
-      en: Forbidden
-      cn: 资源禁止访问
+      en: Forbidden {}
+      cn: 资源禁止访问 {}
     method_not_allowed:
-      en: Method Not Allowed
-      cn: 方法不被允许
+      en: Method Not Allowed {}
+      cn: 方法不被允许 {}
     request_timeout:
-      en: Request Timeout
-      cn: 请求超时
+      en: Request Timeout {}
+      cn: 请求超时 {}
     invalid_argument:
       en: Invalid Argument {}
       cn: 参数错误 {}
@@ -26,11 +26,11 @@ i18n:
       en: Argument Analyze {}
       cn: 参数解析异常 {}
     business_exception:
-      en: Business Exception
-      cn: 业务错误
+      en: Business Exception {}
+      cn: 业务错误 {}
     cache_exception:
-      en: Cache Exception
-      cn: 缓存错误
+      en: Cache Exception {}
+      cn: 缓存错误 {}
     not_found:
-      en: Not Found
-      cn: 请求资源不存在
+      en: Not Found {}
+      cn: 请求资源不存在 {}
