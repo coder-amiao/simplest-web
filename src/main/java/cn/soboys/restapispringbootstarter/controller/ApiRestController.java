@@ -59,7 +59,7 @@ public class ApiRestController {
 
 
     @PostMapping("/page")
-    @Log(value = "查询用户数据", apiType = LogApiTypeEnum.USER, CURDType = LogCURDTypeEnum.RETRIEVE)
+    @Log(value = "查询用户数据", apiType = LogApiTypeEnum.USER, CURDType = LogCURDTypeEnum.RETRIEVE,ipCity = true)
     public Result page(@Validated EntityParam s) {
         ResultPage<List<EntityParam>> resultPage = new ResultPage<>();
         List a = new ArrayList();

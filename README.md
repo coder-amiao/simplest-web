@@ -10,7 +10,7 @@
 后续我萌生里新的想法，SpringBoot 不是提供了自己的starter。我们也可以自定义**starter**吗，于是我定义了**rest-api-spring-boot-starter**，已经发布到maven中央仓库，对之前Restful API 响应框架 做了集成和重构，
 在这个基础上我又总结封装了我自己工作常用的很多工具，结合SpringBoot 封装了全能的工具。 已经更新到了1.3.0 不耦合任何依赖
 
-目前更新版本到1.5.0 支持功能如下
+目前更新版本到1.5.2 支持功能如下
 1. 支持一键配置自定义RestFull API 统一格式返回
 2. 支持RestFull API 错误国际化
 3. 支持全局异常处理，全局参数验证处理
@@ -22,6 +22,9 @@
 9. 集成mybatisPlus一键代码生成
 10. 日志记录，服务监控，支持日志链路查询。自定义数据源
 11. OpenApi3文档一键配置。支持多种文档和自动配置
+12. 接口限流，Ip城市回显
+13. HttpUserAgent请求设备工具封装
+14. RequestUtil参数解析封装工具
 
 [详细使用文档官网](https://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)
 

@@ -63,7 +63,7 @@ rest-api:
   include-packages: cn.soboys.restapispringbootstarter.controller
   ip2region:
     external: false
-    location: ip2region/ip2region.xdb
+    location: classpath:ip2region/ip2region.xdb
 springdoc:
   swagger-ui:
     enabled: true
