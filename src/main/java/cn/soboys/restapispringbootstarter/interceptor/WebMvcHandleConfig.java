@@ -1,5 +1,6 @@
 package cn.soboys.restapispringbootstarter.interceptor;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -15,9 +16,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcHandleConfig implements WebMvcConfigurer {
 
+
+    /**
+     * 授权登录拦截器
+     * @return
+     */
+    @Bean
+    public JwtTokenInterceptor jwtTokenInterceptor() {
+        return new JwtTokenInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //所有路径都被拦截
+        registry.addInterceptor(jwtTokenInterceptor());
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 

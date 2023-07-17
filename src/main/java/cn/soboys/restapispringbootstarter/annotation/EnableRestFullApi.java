@@ -6,6 +6,7 @@ import cn.soboys.restapispringbootstarter.cache.SpringCacheConfig;
 import cn.soboys.restapispringbootstarter.config.BeanAutoConfiguration;
 
 import cn.soboys.restapispringbootstarter.config.OpenApiConfig;
+import cn.soboys.restapispringbootstarter.config.UserJwtAutoConfig;
 import cn.soboys.restapispringbootstarter.interceptor.WebMvcHandleConfig;
 import org.springframework.context.annotation.Import;
 
@@ -25,7 +26,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Import(
         {BeanAutoConfiguration.class,BeanAutoConfiguration.RestTemplateConfig.class,
-                SpringCacheConfig.class, CacheAutoConfiguration.class, OpenApiConfig.class, WebMvcHandleConfig.class})
+                SpringCacheConfig.class, CacheAutoConfiguration.class,
+                OpenApiConfig.class, WebMvcHandleConfig.class, UserJwtAutoConfig.class})
 public @interface EnableRestFullApi {
 
 }

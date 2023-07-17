@@ -16,6 +16,7 @@ public enum HttpStatus implements ResultCode, I18NKey {
     BAD_GATEWAY("502", "bad_gateway"),
     NOT_FOUND("404", "not_found"),
     UNAUTHORIZED("401", "unauthorized"),
+    UNAUTHORIZED_EXPIRED("402","unauthorized_expired"),
     FORBIDDEN("403", "forbidden"),
     METHOD_NOT_ALLOWED("405", "method_not_allowed"),
     REQUEST_TIMEOUT("408", "request_timeout"),
@@ -24,7 +25,9 @@ public enum HttpStatus implements ResultCode, I18NKey {
     ARGUMENT_ANALYZE("10001", "argument_analyze"),
 
     BUSINESS_EXCEPTION("20000", "business_exception"),
-    CACHE_EXCEPTION("20001", "CACHE_EXCEPTION");
+    CACHE_EXCEPTION("20001", "cache_exception");
+
+
 
     private final String value;
 

@@ -81,8 +81,13 @@ public class BeanAutoConfiguration {
     }
 
     @Bean
-    public RestApiProperties.Ip2regionProperties ip2regionProperties(RestApiProperties restApiProperties){
+    public RestApiProperties.Ip2regionProperties ip2regionProperties(RestApiProperties restApiProperties) {
         return restApiProperties.new Ip2regionProperties();
+    }
+
+    @Bean
+    public RestApiProperties.JwtProperties jwtProperties(RestApiProperties restApiProperties) {
+        return restApiProperties.new JwtProperties();
     }
 
     @Bean

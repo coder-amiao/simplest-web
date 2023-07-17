@@ -59,9 +59,9 @@ public class RestApiProperties {
     /**
      * 是否包装分页结果到data
      */
-    private Boolean pageWrap=Boolean.TRUE;
+    private Boolean pageWrap = Boolean.TRUE;
 
-    private String pageData="pageData";
+    private String pageData = "pageData";
 
     /**
      * 排除不需要统一返回的restFull
@@ -76,7 +76,7 @@ public class RestApiProperties {
     @Configuration
     @ConfigurationProperties(prefix = "rest-api.ip2region")
     @Data
-    public class Ip2regionProperties{
+    public class Ip2regionProperties {
         /**
          * 是否使用外部的IP数据文件.
          */
@@ -86,6 +86,56 @@ public class RestApiProperties {
          */
         private String location = "classpath:ip2region/ip2region.xdb";
 
+    }
+
+
+    @Configuration
+    @ConfigurationProperties(prefix = "rest-api.jwt")
+    @Data
+    public class JwtProperties {
+
+        /**
+         * 过期时间秒1天后过期=86400  (单位秒)
+         */
+        private Long expiration = 86400l;
+
+        /**
+         * 记住我过期时间 7天后过期=604800（单位秒）
+         */
+        private Long rememberMeExpiration = 604800l;
+
+        /**
+         * 配置用户自定义签名
+         */
+        private Boolean userSign = Boolean.FALSE;
+        /**
+         * Header Key
+         */
+        private String tokenHeader = "Token";
+
+        /**
+         * # 密匙KEY
+         */
+        private String secret = "2af57b969bac152d";
+
+
+        private Authorization authorization = new Authorization();
+    }
+
+    @Data
+    public static class Authorization {
+
+        private Boolean hasAuthorization = Boolean.FALSE;
+
+        /**
+         * 需要认证的url
+         */
+        private String includesUrl;
+
+        /**
+         * 不需要认证的url
+         */
+        private String excludesUrl;
     }
 
 

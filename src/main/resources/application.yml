@@ -12,12 +12,14 @@ rest-api:
   totalPageSize: totalPageSize
   data: data
   pageData: pageData
+  include-packages: cn.soboys.restapispringbootstarter.controller
+  exclude-packages: xxx.xx.xx
   logging:
     path: ./logs   #日志存储路径（服务器上绝对）
     max-history: 90 # 保存多少天
     max-file-size: 3MB  # 每个文件大小
     max-total-size-cap: 1GB  #总文件大小超过多少压缩
-    level-root: INFO    # 这里的INFO可以替换为其他日志等级，如DEBUG, WARN, ERROR, TRACE, FATAL, OFF等。 日志等级由低到高分别是debugger-info-warn-error
+    level-root: info    # 这里的INFO可以替换为其他日志等级，如DEBUG, WARN, ERROR, TRACE, FATAL, OFF等。 日志等级由低到高分别是debugger-info-warn-error
     logDataSourceClass: cn.soboys.restapispringbootstarter.log.LogFileDefaultDataSource # 日志数据源
   i18n:
     # 若前端无header传参则返回中文信息
@@ -60,10 +62,19 @@ rest-api:
         cn: 请求资源不存在 {}
   redis:
     key-prefix: kenx
-  include-packages: cn.soboys.restapispringbootstarter.controller
   ip2region:
     external: false
     location: classpath:ip2region/ip2region.xdb
+  jwt:
+    secret: 123456   # 秘钥 建议加密后秘钥如md5 不要使用明文长度大于6位
+    expiration: 86400 # token 过期时间（单位秒 1天后过期）
+    token-header: Token  #header token 名称
+    remember-me-expiration: 604800  #记住我 token过期时间(单位秒 7天后过期)
+    user-sign: true # 是否自定义签名。为true需要实现加密接口。和 配置 jwtCfg注入对应bean
+    authorization:
+      has-authorization: true
+      includes-url: /user    # 需要认证请求 多个用逗号隔开
+      excludes-url: /login,/register/**      # 配置无需认证的
 springdoc:
   swagger-ui:
     enabled: true

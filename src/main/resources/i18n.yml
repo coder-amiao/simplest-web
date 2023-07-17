@@ -10,6 +10,9 @@ i18n:
     unauthorized:
       en: Unauthorized {}
       cn: 未授权 {}
+    unauthorized_expired:
+      en: unauthorized expired {}
+      cn: 授权信息过期 {}
     forbidden:
       en: Forbidden {}
       cn: 资源禁止访问 {}
