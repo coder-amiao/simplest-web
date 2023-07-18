@@ -19,8 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2023/7/1 18:00
  * @webSite https://github.com/coder-amiao
  */
-@ImportAutoConfiguration(RedisAutoConfiguration.class)
-@Configuration(proxyBeanMethods = true)
+@Configuration
 public class RedisTempUtil {
 
     private static RedisTempUtil instance;

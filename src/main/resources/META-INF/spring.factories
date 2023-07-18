@@ -1,5 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.soboys.restapispringbootstarter.cache.RedisTempUtil,\
 cn.soboys.restapispringbootstarter.i18n.DefaultMessage\
 
 

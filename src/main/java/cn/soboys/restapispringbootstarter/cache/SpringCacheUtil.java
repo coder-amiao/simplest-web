@@ -17,9 +17,6 @@ import javax.annotation.Resource;
  * @date 2023/7/7 10:13
  * @webSite https://github.com/coder-amiao
  */
-
-@ImportAutoConfiguration(CacheAutoConfiguration.class)
-@Configuration(proxyBeanMethods = true)
 public class SpringCacheUtil {
 
     @Resource

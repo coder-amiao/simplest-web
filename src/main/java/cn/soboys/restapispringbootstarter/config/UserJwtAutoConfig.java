@@ -1,6 +1,7 @@
 package cn.soboys.restapispringbootstarter.config;
 
 import cn.soboys.restapispringbootstarter.authorization.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
@@ -29,7 +30,7 @@ public class UserJwtAutoConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public UserJwtToken userJwtToken(UserSignWith userSignWith) {
+    public UserJwtToken userJwtToken(@Autowired(required = false) UserSignWith userSignWith) {
         UserJwtToken userJwtToken = new UserJwtToken();
         userJwtToken.setUserSign(userSignWith);
         return userJwtToken;

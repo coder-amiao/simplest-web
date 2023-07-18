@@ -105,10 +105,10 @@ public class BeanAutoConfiguration {
         return new LimitAspect();
     }
 
-    @Bean
-    public SpringCacheUtil springCacheUtil() {
-        return new SpringCacheUtil();
-    }
+//    @Bean
+//    public SpringCacheUtil springCacheUtil() {
+//        return new SpringCacheUtil();
+//    }
 
 
     /**

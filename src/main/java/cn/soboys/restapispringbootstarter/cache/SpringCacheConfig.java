@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -32,7 +33,9 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableCaching //开启缓存注解驱动，否则后面使用的缓存都是无效的
+@ConditionalOnClass(name = "org.springframework.data.redis.core.RedisOperations")
 public class SpringCacheConfig {
+
 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
@@ -50,6 +53,13 @@ public class SpringCacheConfig {
             }
         };
     }
+
+
+    @Bean
+    public SpringCacheUtil springCacheUtil(){
+        return new SpringCacheUtil();
+    }
+
 
     /**
      *  定义缓存redis json 序列化

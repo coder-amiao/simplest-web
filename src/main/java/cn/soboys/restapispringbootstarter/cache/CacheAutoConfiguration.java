@@ -24,10 +24,21 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @webSite https://github.com/coder-amiao
  */
 @EnableConfigurationProperties(value = {RestApiProperties.RedisProperties.class})
+@ConditionalOnClass(name = "org.springframework.data.redis.core.RedisOperations")
 public class CacheAutoConfiguration {
 
     @Autowired
     private RestApiProperties.RedisProperties redisProperties;
+
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
+
+
+
+    @Bean
+    public RedisTempUtil redisTempUtil(){
+        return new RedisTempUtil();
+    }
 
     /**
      * Jackson序列化  json
@@ -36,8 +47,7 @@ public class CacheAutoConfiguration {
      * @return
      */
     @Bean
-    @ConditionalOnClass(RedisOperations.class)
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
+    public RedisTemplate<String, Object> redisTemplate( RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
@@ -67,6 +77,9 @@ public class CacheAutoConfiguration {
 
         return template;
     }
+
+
+
 
     public class PrefixStringRedisSerializer implements RedisSerializer<String> {
         private final String prefix;
