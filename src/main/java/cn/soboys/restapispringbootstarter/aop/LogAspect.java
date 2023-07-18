@@ -22,6 +22,7 @@ import org.dromara.hutool.core.exception.ExceptionUtil;
 import org.dromara.hutool.core.text.StrUtil;
 import org.dromara.hutool.json.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -39,6 +40,7 @@ import java.lang.reflect.Method;
 @Component
 @Aspect
 @Slf4j
+@EnableAsync
 public class LogAspect extends BaseAspectSupport {
 
     @Autowired

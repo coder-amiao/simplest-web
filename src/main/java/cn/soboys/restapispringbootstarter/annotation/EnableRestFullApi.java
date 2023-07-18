@@ -28,6 +28,7 @@ import java.lang.annotation.Target;
         {BeanAutoConfiguration.class,BeanAutoConfiguration.RestTemplateConfig.class,
                 SpringCacheConfig.class, CacheAutoConfiguration.class,
                 OpenApiConfig.class, WebMvcHandleConfig.class, UserJwtAutoConfig.class})
+
 public @interface EnableRestFullApi {
 
 }

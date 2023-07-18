@@ -17,6 +17,7 @@ import cn.soboys.restapispringbootstarter.utils.RestFulTemp;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import org.dromara.hutool.extra.spring.EnableSpringUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.cache.Cache;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +46,7 @@ import java.util.List;
  */
 //@Configuration
 //@ConditionalOnProperty(name = "rest-api.enabled", havingValue = "true")
-//@EnableSpringUtil
+@EnableSpringUtil
 public class BeanAutoConfiguration {
 
 
