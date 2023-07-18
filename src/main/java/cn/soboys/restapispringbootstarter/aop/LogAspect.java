@@ -107,7 +107,7 @@ public class LogAspect extends BaseAspectSupport {
                 logBean.setExceptionDetail(res.getMsg());
                 logBean.setRequestId(res.getRequestId());
             } else {
-                logBean.setResult(res);
+                logBean.setResult(res.getData());
             }
         }
         return logBean;
@@ -130,8 +130,11 @@ public class LogAspect extends BaseAspectSupport {
 
             String ip = HttpUserAgent.getIpAddr();
             logBean.setRequestIp(ip);
-            if(logAnnotation.ipCity()){
+            if (logAnnotation.ipCity()) {
                 logBean.setAddress(HttpUserAgent.getIpToCityInfo(ip));
+            }
+            if (!logAnnotation.apiResult()) {
+                logBean.setResult("");
             }
             logBean.setOs(HttpUserAgent.getDeviceSystem());
             logBean.setBrowser(HttpUserAgent.getDeviceBrowser());

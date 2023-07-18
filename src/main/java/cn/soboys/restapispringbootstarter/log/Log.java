@@ -32,4 +32,10 @@ public @interface Log {
 	 * @return
 	 */
 	boolean ipCity()  default true;
+
+	/**
+	 * 是否记录接口整个返回。
+	 * @return
+	 */
+	boolean apiResult() default false;
 }
