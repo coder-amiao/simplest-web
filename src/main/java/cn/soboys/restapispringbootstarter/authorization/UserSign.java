@@ -1,6 +1,6 @@
 package cn.soboys.restapispringbootstarter.authorization;
 
-import cn.soboys.restapispringbootstarter.test.UserEntry;
+
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.spec.SecretKeySpec;
