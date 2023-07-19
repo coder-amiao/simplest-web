@@ -1,4 +1,4 @@
-package cn.soboys.restapispringbootstarter;
+package cn.soboys.restapispringbootstarter.test;
 
 import cn.soboys.restapispringbootstarter.utils.HttpUserAgent;
 import org.dromara.hutool.core.text.StrUtil;

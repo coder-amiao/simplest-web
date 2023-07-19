@@ -13,6 +13,7 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +29,6 @@ import java.util.Map;
  */
 @Slf4j
 public class JwtTokenInterceptor implements HandlerInterceptor {
-
 
 
     @Autowired

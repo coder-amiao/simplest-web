@@ -4,6 +4,7 @@ import cn.soboys.restapispringbootstarter.Assert;
 import cn.soboys.restapispringbootstarter.HttpStatus;
 import org.dromara.hutool.core.text.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2023/7/16 12:12
  * @webSite https://github.com/coder-amiao
  */
-
 public class LoginAuthorizationSubject implements LoginAuthorization {
 
     @Autowired

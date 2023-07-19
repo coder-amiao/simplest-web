@@ -1,5 +1,6 @@
 package cn.soboys.restapispringbootstarter.interceptor;
 
+import org.dromara.hutool.extra.spring.SpringUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @webSite https://github.com/coder-amiao
  * 封装全局的 资源配置。路由配置 拦截处理
  */
-@Configuration
 public class WebMvcHandleConfig implements WebMvcConfigurer {
 
 
@@ -28,7 +28,7 @@ public class WebMvcHandleConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtTokenInterceptor());
+        registry.addInterceptor(SpringUtil.getBean(JwtTokenInterceptor.class));
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.models.info.Info;
 import org.dromara.hutool.core.text.StrUtil;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -54,6 +55,7 @@ public class OpenApiConfig {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
                 .group("rest")
