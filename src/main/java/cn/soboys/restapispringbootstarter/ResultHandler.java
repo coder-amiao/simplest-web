@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dromara.hutool.core.array.ArrayUtil;
 import org.dromara.hutool.core.bean.BeanUtil;
 import org.dromara.hutool.core.text.StrUtil;
+import org.dromara.hutool.extra.spring.SpringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -15,6 +16,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.HashMap;
@@ -245,6 +247,21 @@ public class ResultHandler implements ResponseBodyAdvice<Object> {
             }
         }
 
+        /**
+         * 默认扫描RestController才会统一返回
+         */
+        Map<String, Object> controllerBeans = SpringUtil.getApplicationContext().getBeansWithAnnotation(RestController.class);
+        controllerBeans.remove("openApiResource");
+        controllerBeans.remove("swaggerConfigResource");
+        for (Object bean : controllerBeans.values()) {
+            String packName = bean.getClass().getPackage().getName();
+            if (cls.contains(packName)) {
+                flag = true;
+            } else {
+                flag = false;
+            }
+            break;
+        }
         return flag;
     }
 }
