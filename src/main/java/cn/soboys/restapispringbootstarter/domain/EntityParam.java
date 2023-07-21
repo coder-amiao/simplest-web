@@ -1,5 +1,6 @@
 package cn.soboys.restapispringbootstarter.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
  * @webSite https://github.com/coder-amiao
  */
 @Data
+
 public class EntityParam {
     @NotBlank
     private String name;
@@ -19,4 +21,6 @@ public class EntityParam {
     private String hobby;
     @NotNull
     private Integer age;
+
+
 }

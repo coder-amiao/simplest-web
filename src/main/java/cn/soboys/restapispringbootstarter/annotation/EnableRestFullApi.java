@@ -8,6 +8,7 @@ import cn.soboys.restapispringbootstarter.config.BeanAutoConfiguration;
 import cn.soboys.restapispringbootstarter.config.OpenApiConfig;
 import cn.soboys.restapispringbootstarter.config.UserJwtAutoConfig;
 import cn.soboys.restapispringbootstarter.interceptor.WebMvcHandleConfig;
+import cn.soboys.restapispringbootstarter.serializer.JsonSerializerConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -27,7 +28,8 @@ import java.lang.annotation.Target;
 @Import(
         {BeanAutoConfiguration.class,BeanAutoConfiguration.RestTemplateConfig.class,
                 SpringCacheConfig.class, CacheAutoConfiguration.class,
-                OpenApiConfig.class, WebMvcHandleConfig.class, UserJwtAutoConfig.class})
+                OpenApiConfig.class, WebMvcHandleConfig.class, UserJwtAutoConfig.class,
+                JsonSerializerConfig.class})
 
 public @interface EnableRestFullApi {
 

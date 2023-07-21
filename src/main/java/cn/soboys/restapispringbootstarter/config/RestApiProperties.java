@@ -259,4 +259,33 @@ public class RestApiProperties {
         private String email = "xymarcus@163.com";
 
     }
+
+    @Configuration
+    @ConfigurationProperties(prefix = "rest-api.json")
+    @Data
+    public static class JsonSerializeProperties {
+
+        /**
+         * 时间类型序列化返回 默认时间戳格式
+         * yyyy-MM-dd HH:mm:ss
+         */
+        private String dateForm="timestamp";
+
+        /**
+         * 浮点数序列化 BigDecimal 保留完整精度 科学计数法
+         * 四舍五入
+         */
+        private String numberForm=",###.##";
+
+
+        /**
+         * 对空 返回处理
+         * original 不处理 对象返回null。字符串返回 ""
+         * optional 返回对象本身空。字符串 返回"",集合返回 []
+         */
+        private String nullAble="original";
+
+
+    }
+
 }
