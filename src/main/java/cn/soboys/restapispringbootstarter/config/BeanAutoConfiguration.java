@@ -106,11 +106,6 @@ public class BeanAutoConfiguration {
         return new LimitAspect();
     }
 
-//    @Bean
-//    public SpringCacheUtil springCacheUtil() {
-//        return new SpringCacheUtil();
-//    }
-
 
     /**
      * 参数校验快速失败返回 提升性能
