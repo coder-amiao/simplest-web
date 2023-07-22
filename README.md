@@ -23,9 +23,10 @@
 10. 日志记录，服务监控，支持日志链路查询。自定义数据源
 11. OpenApi3文档一键配置。支持多种文档和自动配置
 12. 生成JWT标准Token和权限认证
-13. 接口限流，Ip城市回显
-14. HttpUserAgent请求设备工具封装
-15. RequestUtil参数解析封装工具
+13. 全局自定义Json序列化处理对空,浮点,时间等类型格式返回
+14. 接口限流，Ip城市回显
+15. HttpUserAgent请求设备工具封装
+16. RequestUtil参数解析封装工具
 
 
 [详细使用文档官网](https://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)
