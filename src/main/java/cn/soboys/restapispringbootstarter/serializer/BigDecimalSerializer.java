@@ -27,6 +27,8 @@ public class BigDecimalSerializer extends JsonSerializer<BigDecimal> {
     public void serialize(BigDecimal value, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
         if (value != null) {
             jgen.writeString( NumberUtil.format(jsonSerializeProperties.getNumberForm(),value));
+        }else {
+            jgen.writeString("0.00");
         }
     }
 }

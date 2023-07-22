@@ -1,10 +1,13 @@
 package cn.soboys.restapispringbootstarter.test;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -15,8 +18,12 @@ import java.util.Date;
  */
 @Data
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.ALWAYS)
 public class Entity {
-    private Date createTime;
+    private LocalDateTime createTime;
     private BigDecimal price;
     private Double sku;
+    private List t;
+    private Integer age;
+    private String hobby;
 }

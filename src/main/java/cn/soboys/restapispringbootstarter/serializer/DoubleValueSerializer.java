@@ -25,6 +25,8 @@ public class DoubleValueSerializer extends JsonSerializer<Double> {
     public void serialize(Double value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         if (value != null) {
             jgen.writeString(NumberUtil.format(jsonSerializeProperties.getNumberForm(),value));
+        }else {
+            jgen.writeString("0.00");
         }
     }
 }

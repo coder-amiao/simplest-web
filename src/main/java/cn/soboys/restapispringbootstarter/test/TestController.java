@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class TestController {
 
     @GetMapping("/test")
     public Entity test() {
-        Entity entity = new Entity(DateUtil.now(), new BigDecimal(12.989), new Double(20.469));
+        Entity entity = new Entity(LocalDateTime.now(), null, new Double(20.469),null,null,null);
         return entity;
     }
 }
