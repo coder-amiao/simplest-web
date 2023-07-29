@@ -29,7 +29,7 @@
 16. RequestUtil参数解析封装工具
 
 
-[详细使用文档官网](https://rest-api-boot.soboys.cn/doc-rest-api-springboot-starter/)
+[详细使用文档官网](https://boot.soboys.cn/simplest/)
 
 在使用过程中尽量使用最新版本。我会持续更新更多的内容。 会第一时间发布在我的公众号
 程序员三时,全网同名
