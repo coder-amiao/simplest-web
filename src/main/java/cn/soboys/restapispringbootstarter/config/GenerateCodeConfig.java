@@ -28,7 +28,7 @@ public class GenerateCodeConfig {
     private String url;
     /**
      * 生成代码 保存路径。默认当前项目下。
-     * 如需修改，使用觉得路径
+     * 如需修改，使用绝对得路径
      */
     private String projectPath;
     /**
